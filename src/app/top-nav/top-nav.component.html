@@ -1,4 +1,4 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<!-- <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,13 +9,13 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="">Home</a>
       </li>
-      <li class="nav-item" *ngIf="!isLoggedIn$">
+      <li class="nav-item" *ngIf="!session">
         <a class="nav-link" routerLink="join-page">회원 가입</a>
       </li>
-      <li class="nav-item" *ngIf="!isLoggedIn$">
+      <li class="nav-item" *ngIf="!session">
         <a class="nav-link" routerLink="login-page">로그인</a>
       </li>
-      <li class="nav-item" *ngIf="isLoggedIn$">
+      <li class="nav-item" *ngIf="session">
         <a class="nav-link" routerLink="login-page" (click)="logout()" >로그아웃</a>
       </li>
       <li class="nav-item">
@@ -43,45 +43,94 @@
         <a class="nav-link" routerLink="support">고객 센터</a>
       </li>
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
+    </form>
   </div>
-</nav>
+</nav> -->
 
-
-  <!-- 드롭다운되는 탑네비
-</nav><nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
 	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
 				data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" routerLink="home">Home</a>
+			<a class="navbar-brand" routerLink="">Home</a>
 		</div>
-
+    <!-- truck-map truck-list truck-info truck-reviews truck-regist favorites reviews support -->
+		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li routerLinkActive="active"><a routerLink="truck-list">Truck List <span class="sr-only">(current)</span></a></li>
-				<li routerLinkActive="active"><a routerLink="food-list">Food List <span class="sr-only">(current)</span></a></li>
+        <!-- <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"><span class="badge">메뉴</span> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+            <li routerLinkActive="active"><a routerLink="truck-map">트럭지도</a></li>
+    				<li routerLinkActive="active"><a routerLink="truck-list">트럭리스트</a></li>
+    				<li routerLinkActive="active"><a routerLink="truck-info">트럭정보</a></li>
+    				<li routerLinkActive="active"><a routerLink="truck-review">트럭리뷰</a></li>
+    				<li routerLinkActive="active"><a routerLink="truck-regist">트럭등록</a></li>
+    				<li routerLinkActive="active"><a routerLink="support">고객센터</a></li>
+					</ul>
+				</li> -->
+				<li routerLinkActive="active"><a routerLink="truck-map">트럭지도</a></li>
+				<li routerLinkActive="active"><a routerLink="truck-list">트럭리스트</a></li>
+				<li routerLinkActive="active"><a routerLink="truck-info">트럭정보</a></li>
+				<li routerLinkActive="active"><a routerLink="truck-review">트럭리뷰</a></li>
+				<li routerLinkActive="active"><a routerLink="truck-regist">트럭등록</a></li>
+				<li routerLinkActive="active"><a routerLink="favorites">나의즐겨찾기</a></li>
+				<li routerLinkActive="active"><a routerLink="reviews">나의리뷰</a></li>
+				<li routerLinkActive="active"><a routerLink="support">고객센터</a></li>
 			</ul>
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="!member"><a href="#" disabled="disabled"><span class="badge">{{member}}</span></a></li>
-        <li *ngIf="!member"><a routerLink="login">Login</a></li>
-        <li class="dropdown" *ngIf="member"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false"><span class="badge">{{member}}</span> <span class="caret"></span></a>
+        <li role="separator" class="divider"></li>
+        <!-- <li *ngIf="email !== null"><a ng-click="logout()" routerLink="login">Logout</a></li> -->
+        <li *ngIf="!session"><a routerLink="join-page">join-page</a></li>
+        <li *ngIf="!session"><a routerLink="login-page">Login</a></li>
+        <li *ngIf="session"><a routerLink="login-page" (click)="logout()">Logout</a></li>
+
+        <li class="dropdown" *ngIf="session"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"><span class="badge">{{email}}</span> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li routerLinkActive="active"><a routerLink="#">profile</a></li>
-						<li routerLinkActive="active"><a routerLink="#">my favorite truck</a></li>
-						<li routerLinkActive="active"><a routerLink="#">my review</a></li>
+						<li routerLinkActive="active"><a routerLink="#">회원정보수정</a></li>
+						<li routerLinkActive="active"><a routerLink="favorites">나의 즐겨찾기</a></li>
+						<li routerLinkActive="active"><a routerLink="reviews">나의 리뷰</a></li>
 						<li role="separator" class="divider"></li>
             <li routerLinkActive="active"><a (click)="logout()"><b class="glyphicon glyphicon-log-out"></b> logout</a></li>
 					</ul>
 				</li>
+
       </ul>
+			<!-- <ul class="nav navbar-nav navbar-right">
+				<c:if test="${not empty user }">
+					<li><a href="#" disabled="disabled"><span class="badge">${user.email }</span></a></li>
+				</c:if>
+				<li class="${active=='login'?'active':'' }">
+					<c:if test="${not empty user }">
+						<a href="<c:url value='/logout'/>">Logout</a>
+					</c:if>
+					<c:if test="${empty user }">
+						<a href="<c:url value='/login'/>">Login</a>
+					</c:if>
+				</li>
+				<li class="${active=='board'?'active':'' }"><a href="<c:url value='/boards'/>">Board</a></li>
+				<li><a href="#">Link</a></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+					</ul>
+				</li>
+			</ul> -->
 		</div>
+		<!-- /.navbar-collapse -->
 	</div>
-</nav> -->
+	<!-- /.container-fluid -->
+</nav>

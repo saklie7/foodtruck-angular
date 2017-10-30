@@ -13,33 +13,40 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 export class TopNavComponent implements OnInit {
   session: string;
-  isLoggedIn$: Observable<boolean>;
+  member: Member;
+  email: string;
 
-  constructor(
-    private authService: AuthenticationService,
-    private router: Router) {
-      this.session = sessionStorage.getItem('member');
-      // this.session = this.authService.isLoggedIn(sessionStorage.getItem('member'));
-      console.log('constructor='+this.isLoggedIn$);
+  constructor(private authService: AuthenticationService, private router: Router) {
+    this.session = sessionStorage.getItem('member');
+    console.log('top#component# constructor session=' + this.session);
+    if(this.session !== null){
+      this.member = JSON.parse(this.session);
+      this.email = this.member.memail;
+    }
+    // this.email = this.member.memail;
   }
 
   ngOnInit() {
-    console.log('nav # ngOnInit # sessionStorage=' + sessionStorage.getItem("member"));
-    this.authService.isLoggedIn()
-      .subscribe(result => {
-        this.isLoggedIn$ = result;
-        console.log('result top::'+result);
-      });
-    console.log('ngOnInit()='+this.isLoggedIn$);
+    console.log('top#component# ngOnInit() session=' + this.session);
+    //동적으로 top-nav의 session 적용
+    this.authService.getObservable().subscribe(
+      massege => {
+        console.log(massege);
+        if (JSON.stringify(massege) === "fail") {
+          this.session = null;
+        } else {
+          this.session = sessionStorage.getItem('member');
+          console.log('top session=' + this.session);
+          this.member = JSON.parse(this.session);
+          console.log('top member.email=' + this.member.memail);
+          this.email = this.member.memail;
+        }
+      }
+    );
   }
 
   logout() {
-    this.authService.logout();
-    // this.authService.logout()
-    // .subscribe(success => {
-    //   sessionStorage.removeItem("member");
-    //   this.session = null;
-    // });
+    sessionStorage.removeItem('member');
+    this.session = null;
   }
-
 }

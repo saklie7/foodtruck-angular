@@ -24,21 +24,16 @@ export class LoginPageComponent implements OnInit {
 
   login(f) {
     this.authService.login(this.model.memail, this.model.mpassword)
-      .subscribe(result => {
-        if (result.merror) {
-          console.log('result=' + result.merror)
-          this.error = result.merror;
+      .then(result => {
+        if(result === "fail") {
+          this.session = null;
+          this.error = "login fail";
         } else {
-          // alert('login success, go to home');
-          // localStorage.setItem('member',result.memail);
-          sessionStorage.setItem('member', JSON.stringify(result));
+          // console.log("login component  success = " + result);
           this.session = sessionStorage.getItem('member');
-          this.authService.isLoggedIn()
-            .subscribe(result => {
-              console.log('ressult:::::'+result);
-            });
           this.router.navigate(['/']);
         }
       });
   }
+
 }
