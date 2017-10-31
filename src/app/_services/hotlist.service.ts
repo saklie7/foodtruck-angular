@@ -21,9 +21,9 @@ export class HotlistService {
 
   constructor(private http: Http) {
     this.session = sessionStorage.getItem('member');
-    if(this.session !== null){
-      this.member = JSON.parse(this.session);
-    }
+    // if(this.session !== null){
+    //   this.member = JSON.parse(this.session);
+    // }
     console.log('review service # constructor # session =' + this.session);
   }
 
@@ -32,6 +32,9 @@ export class HotlistService {
   }
 
   getHotlistDetail(): Observable<HotlistDetail[]> {
+    if(this.session !== null){
+      this.member = JSON.parse(this.session);
+    }
     var email = this.member.memail;
     var url = `${this.hotlistUrl}/${email}`;
     return this.http.get(url)

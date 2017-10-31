@@ -18,19 +18,38 @@ export class ReviewService {
 
   constructor(private http: Http) {
     this.session = sessionStorage.getItem('member');
-    if (this.session !== null) {
-      this.member = JSON.parse(this.session);
-    }
+    // if (this.session !== null) {
+    //   this.member = JSON.parse(this.session);
+    // }
     console.log('review service # constructor # session =' + this.session);
   }
 
   //내가 등록한 리뷰를 가져온다.
   getMyReview(): Observable<Review[]> {
+    if(this.session !== null){
+      this.member = JSON.parse(this.session);
+    }
     var email = this.member.memail;
     var url = `${this.reviewUrl}/member/${email}`;
     console.log('review url='+url);
     return this.http.get(url)
       .map(this.extractData)
+      ._catch(this.handleError);
+  }
+
+  addReview(comment:string, image:string, score:number, email:string, truck:string): Observable<string> {
+    var url = this.reviewUrl;
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let review = { "rComment":comment, "rImage": image, "rScore":score, "rMember":email, "rTruck":truck };
+    console.log('add review info = ' + JSON.stringify(review));
+
+    return this.http.post(url, JSON.stringify(review), options)
+      // .map(this.extractDataForObject)
+      .map(res => {
+        let json = res.text();
+        console.log('json='+json)
+      })
       ._catch(this.handleError);
   }
 

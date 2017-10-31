@@ -16,27 +16,28 @@
       </div>
     </div>
   </form>
-</div>
 
 
-<div class="row">
-  <h3>{{member.mnickname}} 님의 즐겨찾기</h3>
-  <div *ngIf="message" class="alert alert-info">{{message}}</div>
-  <div  class="col-md-4" *ngFor="let h of hotlistDetail">
-    <div class="panel panel-default">
-      <div class="panel-heading" >즐겨찾기 번호: {{h.hid}}</div>
-      <div class="panel-body" >
-        트럭아이디{{h.tid}}<br>
-        가게이름 : {{h.tname}} <br>
-        평점 : {{h.tavg}}점<br>
-        판매음식 : {{h.tfood}} <br>
-        위도와 경도 : {{h.tlat}} :: {{h.tlng}}<br>
-      </div>
-      <div class="panel-footer clearfix">
-        <div class="pull-right">
-          <a [routerLink]="['/favorites']" class="text-warning" (click)="removeHotlist(h)">
-            <span class="glyphicon glyphicon-remove"></span>
-          </a>
+
+  <div class="row">
+    <h3>{{member.mnickname}} 님의 즐겨찾기</h3>
+    <div *ngIf="message" class="alert alert-info">{{message}}</div>
+    <div  class="col-md-4" *ngFor="let h of hotlistDetail">
+      <div class="panel panel-default">
+        <div class="panel-heading" >즐겨찾기 번호: {{h.hid}}</div>
+        <div class="panel-body" >
+          트럭아이디: {{h.tid}}<br>
+          가게이름 : {{h.tname}} <br>
+          평점 : {{h.tavg}}점<br>
+          판매음식 : {{h.tfood}} <br>
+          위도와 경도 : {{h.tlat}} :: {{h.tlng}}<br>
+        </div>
+        <div class="panel-footer clearfix">
+          <div class="pull-right">
+            <a [routerLink]="['/favorites']" class="text-warning" (click)="removeHotlist(h)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
