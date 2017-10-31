@@ -27,18 +27,18 @@ export class TopNavComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('top#component# ngOnInit() session=' + this.session);
+    // console.log('top#component# ngOnInit() session=' + this.session);
     //동적으로 top-nav의 session 적용
     this.authService.getObservable().subscribe(
       massege => {
-        console.log(massege);
+        // console.log(massege);
         if (JSON.stringify(massege) === "fail") {
           this.session = null;
         } else {
           this.session = sessionStorage.getItem('member');
-          console.log('top session=' + this.session);
+          // console.log('top session=' + this.session);
           this.member = JSON.parse(this.session);
-          console.log('top member.email=' + this.member.memail);
+          // console.log('top member.email=' + this.member.memail);
           this.email = this.member.memail;
         }
       }

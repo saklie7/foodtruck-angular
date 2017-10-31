@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { HotlistService } from '../_services/hotlist.service';
 
 import { Hotlist } from '../_models/hotlist.model';
-import { Truck } from '../_models/truck.model';
 import { Member } from '../_models/member.model';
 import { HotlistDetail } from '../_models/hotlistdetail.model';
 
@@ -20,13 +19,12 @@ export class FavoritesComponent implements OnInit {
   // trucks: Truck[];
 
   member: Member;
+  session: string;
+  errorMessage: string;
   message: string;
 
   constructor(private hotlistService: HotlistService, private http: Http, private router:Router) {
-    var session = sessionStorage.getItem('member');
-    if (session !== null) {
-      this.member = JSON.parse(session);
-    }
+    this.session = sessionStorage.getItem('member');
   }
 
   ngOnInit() {
@@ -34,6 +32,9 @@ export class FavoritesComponent implements OnInit {
   }
 
   getHotlistDetail() {
+    if (this.session !== null) {
+      this.member = JSON.parse(this.session);
+    }
     this.hotlistService.getHotlistDetail()
       .subscribe(result => {
         // console.log('hotlist detail='+result);
@@ -50,20 +51,27 @@ export class FavoritesComponent implements OnInit {
   addHotlist(hmember: string, htruck: string) {
     this.hotlistService.addHotlist(hmember, htruck)
       .subscribe(result => {
-        this.message = result.herror;
+        // alert(result.herror);
+        this.errorMessage = result.herror;
+        //실제로 추가할 때는 필요없습니다.
+        //지금은 테스트상으로 넣어둠.
+        this.getHotlistDetail();
       });
   }
 
   removeHotlist(hotlistdetail: HotlistDetail) {
-    var hid = hotlistdetail.hid;
-    console.log('hid='+hid);
-    this.hotlistService.removeHotlist(hid)
+    this.hotlistService.removeHotlist(hotlistdetail)
       .subscribe(result => {
-        // res.text();
         console.log('hotlist remove = '+ result);
-        // this.router.navigate(['/favorites']);
-
+        this.message = result;
+        this.getHotlistDetail();
       });
   }
+
+  // removeMember(hotlistDetail: HotlistDetail) {
+  //   this.hotlistService.removeHotlist(hotlistDetail)
+  //     .subscribe(hotlistDetail => this.hotlistDetail = hotlistDetail, error => this.errorMessage = <any>error)
+  // }
+
 
 }

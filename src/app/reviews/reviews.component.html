@@ -1,3 +1,85 @@
 <p>
   reviews works!
 </p>
+<div class="bs-example container">
+  <form class="form-horizontal" name="form" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="comment" class="control-label col-xs-2">글내용</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" [(ngModel)]="comment" name="comment" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="image" class="control-label col-xs-2">사진</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" [(ngModel)]="image" name="image" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="score" class="control-label col-xs-2">별점</label>
+      <div class="col-xs-10">
+        <input type="number" class="form-control" [(ngModel)]="score" name="score" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="truck" class="control-label col-xs-2">트럭이륾</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" [(ngModel)]="truck" name="truck" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-offset-2 col-xs-10">
+        <!-- <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div> -->
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <h3>{{member.mnickname}} 님의 리뷰</h3>
+    <div *ngIf="message" class="alert alert-info">{{message}}</div>
+    <div  class="col-md-4" *ngFor="let r of myReviews">
+      <div class="panel panel-default">
+        <div class="panel-heading" >리뷰 번호: {{r.rid}}</div>
+        <div class="panel-body" >
+          해당트럭: {{r.rtruck}}<br>
+          사진: {{r.rimage}}
+          내용: {{r.rcomment}}<br>
+          점수: {{r.rscore}}<br>
+          작성일: {{r.rdate}}<br>
+        </div>
+        <div class="panel-footer clearfix">
+          <div class="pull-right">
+            <a [routerLink]="['/favorites']" class="text-warning" (click)="removeHotlist(h)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <h3>{{member.mnickname}} 님의 리뷰</h3>
+    <div *ngIf="message" class="alert alert-info">{{message}}</div>
+    <div  class="col-md-4" *ngFor="let h of hotlistDetail">
+      <div class="panel panel-default">
+        <div class="panel-heading" >즐겨찾기 번호: {{h.hid}}</div>
+        <div class="panel-body" >
+          트럭아이디{{h.tid}}<br>
+          가게이름 : {{h.tname}} <br>
+          평점 : {{h.tavg}}점<br>
+          판매음식 : {{h.tfood}} <br>
+          위도와 경도 : {{h.tlat}} :: {{h.tlng}}<br>
+        </div>
+        <div class="panel-footer clearfix">
+          <div class="pull-right">
+            <a [routerLink]="['/favorites']" class="text-warning" (click)="removeHotlist(h)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

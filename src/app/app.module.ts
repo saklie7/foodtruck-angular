@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { AppRoutingModule } from './app.routing.module';
+//review star rating
+import { BarRatingModule } from "ngx-bar-rating";
 
 //component
 import { AppComponent } from './app.component';
@@ -30,6 +32,7 @@ import { UploadFileService } from './service/file-upload.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { MemberService } from './_services/member.service';
 import { HotlistService } from './_services/hotlist.service';
+import { ReviewService } from './_services/review.service';
 
 
 @NgModule({
@@ -58,6 +61,8 @@ import { HotlistService } from './_services/hotlist.service';
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
+    //review star rating
+    BarRatingModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBFQmGdDApLDMW8Fp3F8VtOv9kwAg1xAUU',
       region: "kr",
@@ -69,6 +74,7 @@ import { HotlistService } from './_services/hotlist.service';
     MemberService,
     HotlistService,
     UploadFileService,
+    ReviewService,
   ],
   bootstrap: [AppComponent]
 })
