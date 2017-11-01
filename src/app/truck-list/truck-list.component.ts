@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { TruckService } from '../_services/truck.service'
 
 @Component({
   selector: 'app-truck-list',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TruckListComponent implements OnInit {
 
-  constructor() { }
+  trucks: object[] = [
+  ];
+
+
+
+  currentFileUpload: File
+
+  constructor(private truckService: TruckService) { }
 
   ngOnInit() {
+    this.truckService.truckgetAll().subscribe(res => {
+      console.log(res.json());
+      this.trucks = res.json()
+    });
   }
 
+  search(f) {
+    console.log(f.value.key)
+    this.truckService.keyFind(f.value.key).subscribe(res => {
+      console.log(res.json());
+      // this.trucks=res.json();
+    });
+
+
+  }
 }

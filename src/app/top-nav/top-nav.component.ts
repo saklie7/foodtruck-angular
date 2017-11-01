@@ -19,10 +19,10 @@ export class TopNavComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) {
     this.session = sessionStorage.getItem('member');
     console.log('top#component# constructor session=' + this.session);
-    if(this.session !== null){
-      this.member = JSON.parse(this.session);
-      this.email = this.member.memail;
-    }
+    // if(this.session !== null){
+    //   this.member = JSON.parse(this.session);
+    //   this.email = this.member.memail;
+    // }
     // this.email = this.member.memail;
   }
 
@@ -30,16 +30,14 @@ export class TopNavComponent implements OnInit {
     // console.log('top#component# ngOnInit() session=' + this.session);
     //동적으로 top-nav의 session 적용
     this.authService.getObservable().subscribe(
-      massege => {
-        // console.log(massege);
-        if (JSON.stringify(massege) === "fail") {
-          this.session = null;
-        } else {
+      massege=>{
+        if(massege.login='true'){
           this.session = sessionStorage.getItem('member');
-          // console.log('top session=' + this.session);
-          this.member = JSON.parse(this.session);
-          // console.log('top member.email=' + this.member.memail);
-          this.email = this.member.memail;
+          if(this.session !== null){
+            let member = JSON.parse(this.session) as Member;
+            console.log('topnav='+member.memail);
+            this.email = member.memail;
+          }
         }
       }
     );
@@ -48,5 +46,7 @@ export class TopNavComponent implements OnInit {
   logout() {
     sessionStorage.removeItem('member');
     this.session = null;
+    // location.reload();
   }
+
 }

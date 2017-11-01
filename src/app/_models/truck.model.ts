@@ -1,7 +1,7 @@
 export class Truck {
   tid: number;
   tname: string;
-  tfood: string;
+  timage: string;
   tavg: any;
   tcomment: string;
   topen: string;
@@ -10,4 +10,6 @@ export class Truck {
   tlng: string;
   tfoddmaterial: string;
   tmember: string;
+
+  terror:string;
 }

@@ -15,7 +15,8 @@ import { MenuListComponent } from './menu-list/menu-list.component';
 import { TruckRegistComponent } from './truck-regist/truck-regist.component';
 
 const routes: Routes = [
-  { path: '', component: MainHomeComponent},
+  { path: '', redirectTo: '/main-home', pathMatch: 'full' },
+  { path: 'main-home', component: MainHomeComponent},
   { path: 'truck-map', component: GoogleMapComponent},
   { path: 'login-page', component: LoginPageComponent},
   { path: 'join-page', component: JoinPageComponent},
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'favorites', component: FavoritesComponent},
   { path: 'support', component: SupportComponent},
   { path: 'reviews', component: ReviewsComponent},
-  { path: 'truck-info', component: TruckInfoComponent},
+  { path: 'truck-info/:tid', component: TruckInfoComponent},
   { path: 'truck-reviews', component: TruckReviewsComponent},
   { path: 'truck-regist', component: TruckRegistComponent},
 ];

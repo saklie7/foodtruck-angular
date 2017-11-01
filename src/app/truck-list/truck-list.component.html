@@ -1,3 +1,21 @@
-<p>
-  truck-list works!
-</p>
+<div class="container">
+  <form class="form" (ngSubmit)="search(f)" #f="ngForm">
+    <div class="input-group">
+      <input type="text" class="form-control" name="key" [(ngModel)]="key" required placeholder="Search">
+      <div class="input-group-btn">
+        <button class="btn btn-default">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+      </div>
+    </div>
+  </form>
+  <br>
+  <div *ngFor="let t of trucks">
+        <img src="{{resource}}" alt="image">
+        <h4 class="md-headline">name: {{t.tname}}</h4>
+        <h4 class="md-headline">open : {{t.topen}}</h4>
+        <h4 class="md-subhead">close : {{t.tclose}}</h4>
+        <h4 class="md-subhead">address : {{t.taddress}}</h4>
+    <br>
+  </div>
+</div>

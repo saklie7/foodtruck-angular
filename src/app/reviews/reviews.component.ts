@@ -28,14 +28,13 @@ export class ReviewsComponent implements OnInit {
   }
 
   ngOnInit() {
-    //처음 시작할 때 띄어줄 리스트
     this.getMyReview();
   }
 
   getMyReview() {
     this.reviewService.getMyReview()
       .subscribe(result => {
-        // console.log('hotlist detail='+result);
+        // console.log('reviewService myReviews='+result);
         this.myReviews = result;
       });
   }
@@ -58,6 +57,14 @@ export class ReviewsComponent implements OnInit {
       });
   }
 
+  removeReview(review:Review) {
+    this.reviewService.removeReview(review)
+      .subscribe(result => {
+        this.message = result;
+        this.getMyReview();
+      }
+    );
+  }
 
 
 }

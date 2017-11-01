@@ -17,20 +17,34 @@ export class ReviewService {
 
 
   constructor(private http: Http) {
+    // console.log('언제실행?')
     this.session = sessionStorage.getItem('member');
-    // if (this.session !== null) {
-    //   this.member = JSON.parse(this.session);
-    // }
     console.log('review service # constructor # session =' + this.session);
   }
 
   //내가 등록한 리뷰를 가져온다.
   getMyReview(): Observable<Review[]> {
+    console.log('review service # getMyReview # session =' + this.session);
     if(this.session !== null){
       this.member = JSON.parse(this.session);
     }
     var email = this.member.memail;
     var url = `${this.reviewUrl}/member/${email}`;
+    console.log('review url='+url);
+    return this.http.get(url)
+      .map(this.extractData)
+      ._catch(this.handleError);
+  }
+
+  getTruckReview(): Observable<Review[]> {
+    console.log('review service # getTruckReview # session =' + this.session);
+    if(this.session !== null){
+      this.member = JSON.parse(this.session);
+    }
+    //트럭아이디를 어떻게 가져 올 것인가? ----------
+    var email = this.member.memail;
+
+    var url = `${this.reviewUrl}/truck/${email}`;
     console.log('review url='+url);
     return this.http.get(url)
       .map(this.extractData)
@@ -49,6 +63,18 @@ export class ReviewService {
       .map(res => {
         let json = res.text();
         console.log('json='+json)
+        return json || {};
+      })
+      ._catch(this.handleError);
+  }
+
+  removeReview(review:Review): Observable<string> {
+    let url = `${this.reviewUrl}/${review.rid}`;
+    console.log('review remove url= '+url);
+    return this.http.delete(url, {headers:this.headers})
+      .map(res => {
+        let json = res.text();
+        return json || {};
       })
       ._catch(this.handleError);
   }

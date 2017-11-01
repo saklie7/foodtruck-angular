@@ -61,7 +61,7 @@ export class HotlistService {
     return this.http.delete(url, {headers:this.headers})
     .map(res => {
       let json = res.text();
-      this.subject.next({ json });
+      // this.subject.next({ json });
       return json || {};
     })
     ._catch(this.handleError);

@@ -24,40 +24,53 @@ export class AuthenticationService {
     private router: Router
   ) { }
 
-  getObservable(): Observable<Member> {
+  getObservable(): Observable<any> {
+    console.log('getObservable() working');
     return this.subject.asObservable();
   }
 
-  login(email: string, password: string): Promise<any> {
+  login(email: string, password: string): Promise<string> {
     const url = `${this.loginUrl}/login`;
     let headers = new Headers({ 'Content-Type': 'application/json;  charset=utf-8', 'Accept': 'application/json' })
     let options = new RequestOptions({ headers: headers });
     let member = { "mEmail": email, "mPassword": password }
     console.log('member = ' + JSON.stringify(member));
 
+    // return this.http.post(url, JSON.stringify(member), options).toPromise().then(
+    //   res => {
+    //     let json = res.text();
+    //     console.log("service login =" + json);
+    //     if(json === "fail") {
+    //       return json || {};
+    //     } else {
+    //       // json = JSON.parse(json);
+    //       sessionStorage.setItem('member', json);
+    //       //이때, top-nav로 가서 처리
+    //       this.subject.next({ json });
+    //       return json || {};
+    //     }
+    //
+    //   });
     return this.http.post(url, JSON.stringify(member), options).toPromise().then(
       res => {
-        let json = res.text();
-        console.log("service login =" + json);
-        if(json === "fail") {
-          return json || {};
+        let member = res.json() as Member;
+        console.log('error ='+member.merror);
+        if (member.merror !== null) {
+          return JSON.stringify(member) || {};
         } else {
-          // json = JSON.parse(json);
-          sessionStorage.setItem('member', json);
+          let m = JSON.stringify(member);
+          sessionStorage.setItem('member', m);
           //이때, top-nav로 가서 처리
-          this.subject.next({ json });
-          return json || {};
+          this.subject.next({ login: 'true' });
+          return m || {};
         }
-
       });
   }
 
-  // logout() {
-  //   const url = `${this.loginUrl}/logout`;
-  //   return this.http.get(url)
-  //     .map(this.extractData)
-  //     .catch(this.handleError);
-  // }
+  logout() {
+    const url = `${this.loginUrl}/logout`;
+    return this.http.get(url);
+  }
 
   private extractDataForObject(res: Response) {
     console.log('extractDataForObject#res = ' + JSON.stringify(res));

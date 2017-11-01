@@ -1,3 +1,36 @@
-<p>
-  truck-regist works!
-</p>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form class="" #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div class="form-group">
+        <label class="sr-only" for="email">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="name" name="name" placeholder="name" required>
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="password">Open</label>
+        <input type="text" class="form-control" [(ngModel)]="open"  name="open" placeholder="open" required>
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="name">Close</label>
+        <input type="text" class="form-control" [(ngModel)]="close" name="close" placeholder="close" required>
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="address">위치</label>
+
+        <input type="text" class="form-control" [(ngModel)]="lat" value="{{lat}}" name="lat" placeholder="lat" required>
+        <input type="text" class="form-control" [(ngModel)]="lng" value="{{lng}}" name="lng" placeholder="lng" required>
+        <button type="button" (click)="setCurrentPosition()" name="button">위치 등록</button>
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="comment">소개글</label>
+        <input type="text" class="form-control" [(ngModel)]="comment" name="comment" placeholder="comment" required>
+      </div>
+        <div class="form-group">
+          <label class="sr-only" for="picture">사진</label>
+      	<input type="file" (change)="selectFile($event)">
+      </div>
+      <button>
+        <b class="glyphicon glyphicon-plus"></b>SEND
+      </button>
+    </form>
+  </div>
+</div>

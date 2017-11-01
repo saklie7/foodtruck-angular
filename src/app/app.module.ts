@@ -5,7 +5,8 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
-import { AppRoutingModule } from './app.routing.module';
+import { AppRoutingModule } from './app-routing.module';
+
 //review star rating
 import { BarRatingModule } from "ngx-bar-rating";
 
@@ -28,11 +29,14 @@ import { MenuListComponent } from './menu-list/menu-list.component';
 import { TruckRegistComponent } from './truck-regist/truck-regist.component';
 
 //service
-import { UploadFileService } from './service/file-upload.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { MemberService } from './_services/member.service';
 import { HotlistService } from './_services/hotlist.service';
 import { ReviewService } from './_services/review.service';
+import { GoogleMapService } from './_services/google-map.service';
+import { TruckService } from './_services/truck.service';
+import { UploadFileService } from './_services/file-upload.service';
+
 
 
 @NgModule({
@@ -73,8 +77,11 @@ import { ReviewService } from './_services/review.service';
     AuthenticationService,
     MemberService,
     HotlistService,
-    UploadFileService,
     ReviewService,
+    GoogleMapService,
+    TruckService,
+    UploadFileService,
+
   ],
   bootstrap: [AppComponent]
 })
