@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'favorites', component: FavoritesComponent},
   { path: 'support', component: SupportComponent},
   { path: 'reviews', component: ReviewsComponent},
+  { path: 'menu-list', component: MenuListComponent},
   { path: 'truck-info/:tid', component: TruckInfoComponent},
   { path: 'truck-reviews', component: TruckReviewsComponent},
   { path: 'truck-regist', component: TruckRegistComponent},

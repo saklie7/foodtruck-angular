@@ -10,6 +10,7 @@ import { MemberService } from '../_services/member.service';
   styleUrls: ['./join-page.component.css']
 })
 export class JoinPageComponent implements OnInit {
+  model: any = {};
   member: Member;
   errorMessage: string;
 

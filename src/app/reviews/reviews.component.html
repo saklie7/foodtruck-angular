@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="truck" class="control-label col-xs-2">트럭이륾</label>
+      <label for="truck" class="control-label col-xs-2">트럭번호</label>
       <div class="col-xs-10">
         <input type="text" class="form-control" [(ngModel)]="truck" name="truck" required>
       </div>
@@ -37,7 +37,8 @@
 
   <div class="row">
     <h3>{{member.mnickname}} 님의 리뷰</h3>
-    <div *ngIf="message" class="alert alert-info">{{message}}</div>
+    <!-- 화면에 결과 메세지를 띄우고 싶을 때, 지금은 alert사용 -->
+    <!-- <div *ngIf="message" class="alert alert-info">{{message}}</div> -->
     <div  class="col-md-4" *ngFor="let r of myReviews">
       <div class="panel panel-default">
         <div class="panel-heading" >리뷰 번호: {{r.rid}}</div>

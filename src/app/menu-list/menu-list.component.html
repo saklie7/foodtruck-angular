@@ -1,3 +1,16 @@
 <p>
   menu-list works!
 </p>
+<div class="container">
+  <h2>Image Gallery</h2>
+  <div class="row" *ngFor="let i of images">
+    <div class="col-md-3">
+      <div class="thumbnail">
+          <img src="{{i.url}}" alt="Lights" style="width:100%">
+          <div class="caption">
+            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

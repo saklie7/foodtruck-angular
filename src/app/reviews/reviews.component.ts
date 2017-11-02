@@ -52,7 +52,7 @@ export class ReviewsComponent implements OnInit {
     this.reviewService.addReview(comment, image, score, email, truck)
       .subscribe(res => {
         console.log('addReview = '+res);
-          this.message = res;
+          // this.message = res;
           this.getMyReview();
       });
   }
@@ -60,7 +60,8 @@ export class ReviewsComponent implements OnInit {
   removeReview(review:Review) {
     this.reviewService.removeReview(review)
       .subscribe(result => {
-        this.message = result;
+        // this.message = result;
+        alert(result);
         this.getMyReview();
       }
     );

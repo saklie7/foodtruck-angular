@@ -37,13 +37,12 @@ export class TruckRegistComponent implements OnInit {
   }
 
   onSubmit(f) {
-    // f.value.file = this.selectedFiles.item(0);
+    f.value.file = this.selectedFiles.item(0);
     //3
     if (this.session !== null) {
       this.member = JSON.parse(this.session);
     }
 
-    f.value.file = null;
     console.log(f.value);
     // this.truckService.truckRegist(f.value.name, f.value.open, f.value.close, f.value.lat, f.value.lng, f.value.comment, f.value.file);
     this.truckService.truckRegist(f.value.name, f.value.open, f.value.close,

@@ -11,11 +11,12 @@
   </form>
   <br>
   <div *ngFor="let t of trucks">
-        <img src="{{resource}}" alt="image">
+      <img src="http://{{t.tresource}}" alt="img" width="100px" height="100px">
+
         <h4 class="md-headline">name: {{t.tname}}</h4>
         <h4 class="md-headline">open : {{t.topen}}</h4>
         <h4 class="md-subhead">close : {{t.tclose}}</h4>
         <h4 class="md-subhead">address : {{t.taddress}}</h4>
-    <br>
+     <br>
   </div>
 </div>

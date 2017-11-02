@@ -19,11 +19,16 @@ export class TopNavComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) {
     this.session = sessionStorage.getItem('member');
     console.log('top#component# constructor session=' + this.session);
+    if(this.session !== null) {
+      let member = JSON.parse(this.session) as Member;
+      this.email = member.memail;
+    }
     // if(this.session !== null){
     //   this.member = JSON.parse(this.session);
     //   this.email = this.member.memail;
     // }
     // this.email = this.member.memail;
+
   }
 
   ngOnInit() {
