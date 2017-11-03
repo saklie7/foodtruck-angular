@@ -39,23 +39,23 @@ export class ReviewsComponent implements OnInit {
       });
   }
 
-  onSubmit(f) {
-    if (f.valid) {
-      var r = f.value;
-      this.addReview(r.comment, r.image, r.score, this.member.memail, r.truck);
-    }
-  }
+  // onSubmit(f) {
+  //   if (f.valid) {
+  //     var r = f.value;
+  //     this.addReview(r.comment, r.image, r.score, this.member.memail, r.truck);
+  //   }
+  // }
 
   //실제로 리뷰를 등록할 때는 해당 트럭의 트럭정보에 가서 리뷰를 입력.
   //따라서 실제 서비스를 할 때 트럭아이디ㄴ는 아땋게 가져오나?
-  addReview(comment:string, image:string, score:number, email:string, truck:string) {
-    this.reviewService.addReview(comment, image, score, email, truck)
-      .subscribe(res => {
-        console.log('addReview = '+res);
-          // this.message = res;
-          this.getMyReview();
-      });
-  }
+  // addReview(comment:string, image:string, score:number, email:string, truck: number) {
+  //   this.reviewService.addReview(comment, image, score, email, truck)
+  //     .subscribe(res => {
+  //       console.log('addReview = '+res);
+  //         // this.message = res;
+  //         this.getMyReview();
+  //     });
+  // }
 
   removeReview(review:Review) {
     this.reviewService.removeReview(review)

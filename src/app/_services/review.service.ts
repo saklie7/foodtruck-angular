@@ -36,29 +36,46 @@ export class ReviewService {
       ._catch(this.handleError);
   }
 
-  getTruckReview(): Observable<Review[]> {
-    console.log('review service # getTruckReview # session =' + this.session);
-    if(this.session !== null){
-      this.member = JSON.parse(this.session);
-    }
+  getTruckReview(tid:string): Observable<Review[]> {
+    // console.log('review service # getTruckReview # session =' + this.session);
+    // if(this.session !== null){
+    //   this.member = JSON.parse(this.session);
+    // }
     //트럭아이디를 어떻게 가져 올 것인가? ----------
-    var email = this.member.memail;
+    // var email = this.member.memail;
 
-    var url = `${this.reviewUrl}/truck/${email}`;
+    var url = `${this.reviewUrl}/truck/${tid}`;
     console.log('review url='+url);
     return this.http.get(url)
-      .map(this.extractData)
+      .map(res => {
+        let json = res.text();
+        console.log(json);
+        json = JSON.parse(json);
+        return json || [];
+      })
       ._catch(this.handleError);
   }
 
-  addReview(comment:string, image:string, score:number, email:string, truck:string): Observable<string> {
+  addReview(comment:string, image:File, score:string, email:string, truck:string): Observable<string> {
     var url = this.reviewUrl;
-    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let review = { "rComment":comment, "rImage": image, "rScore":score, "rMember":email, "rTruck":truck };
-    console.log('add review info = ' + JSON.stringify(review));
+    // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
+    let formdata: FormData = new FormData();
 
-    return this.http.post(url, JSON.stringify(review), options)
+    formdata.append('comment', comment);
+    formdata.append('image', image);
+    formdata.append('score', score);
+    formdata.append('email', email);
+    formdata.append('truck', truck);
+    // let review = { "rComment":comment, "rImage": image, "rScore":score, "rMember":email, "rTruck":truck };
+    // console.log('add review info = ' + JSON.stringify(review.rImage));
+    console.log('reivew 1='+formdata.get('comment'));
+    console.log('reivew 2='+formdata.get('image'));
+    console.log('reivew 3='+formdata.get('score'));
+    console.log('reivew 4='+formdata.get('email'));
+    console.log('reivew 5='+formdata.get('truck'));
+
+    return this.http.post(url, formdata)
       // .map(this.extractDataForObject)
       .map(res => {
         let json = res.text();

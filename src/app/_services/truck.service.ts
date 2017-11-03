@@ -4,6 +4,8 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
+import { Truck } from '../_models/truck.model';
+
 @Injectable()
 export class TruckService {
 
@@ -11,19 +13,19 @@ export class TruckService {
   ];
 
   private subject = new Subject<any>();
-  private trucksUrl: string = "http://localhost:8080/trucks";
+  private truckUrl: string = "http://localhost:8080/trucks";
 
-  constructor(private http2: Http) { }
+  constructor(private http: Http) { }
 
   // truckRegist(name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File) {
   truckRegist(name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File, email:string) {
-    const url = `${this.trucksUrl}/post`;
+    const url = `${this.truckUrl}/post`;
     let formdata: FormData = new FormData();
     let address: string;
     // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
 
-    this.http2.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyAmd6XJpMMk5qA869GC9XXrNmo8Fb1cRYg")
+    this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyAmd6XJpMMk5qA869GC9XXrNmo8Fb1cRYg")
     .subscribe(response=>
       {
         // console.log(response.json());
@@ -46,20 +48,47 @@ export class TruckService {
         console.log(formdata.get('file'));
         console.log(formdata.get('email'));
 
-        return this.http2.post(url, formdata).subscribe();
+        return this.http.post(url, formdata).subscribe();
       })
 
   }
 
   truckgetAll(): Observable<any> {
-    const url = `${this.trucksUrl}/getalltrucks`;
-    return this.http2.get(url)
+    const url = `${this.truckUrl}`;
+    return this.http.get(url)
   }
 
   keyFind(key: string): Observable<any> {
     console.log(key);
-    const url = `${this.trucksUrl}/find/${key}`;
+    const url = `${this.truckUrl}/find/${key}`;
     console.log(url);
-    return this.http2.get(url);
+    return this.http.get(url);
+  }
+
+  getTruckInfo(tid: string):Observable<any> {
+    const url = `${this.truckUrl}/${tid}`;
+    return this.http.get(url)
+    .map(this.extractDataForObject)
+    ._catch(this.handleError);
+  }
+
+
+  private extractDataForObject(res: Response) {
+    let json = res.text();
+    console.log('truck service=' + json);
+    json = JSON.parse(json);
+    return json || {};
+  }
+
+  private extractData(res: Response) {
+    let json = res.text();
+    console.log('review service=' + json);
+    json = JSON.parse(json);
+    return json || [];
+  }
+
+  private handleError(res: Response) {
+    console.log("Erroe = " + res);
+    return Observable.throw(res.json().error || 'Server Down');
   }
 }

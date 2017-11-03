@@ -1,25 +1,24 @@
-<p>
-  truck-info works!
-</p>
-<div class="">
-  <div>
-    name: {{name}}
-  </div>
-  <div>
-    open: {{open}}
-  </div>
-  <div>
-    close: {{close}}
-  </div>
-  <div>
-    address: {{address}}
-  </div>
-  <div>
-    tID: {{id}}
-  </div>
-  <div>
-    <img src="" alt="">
+<h2>truck-info works!</h2>
+
+<div class="row">
+  <div  class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading" >트럭 번호: {{truck.tid}}</div>
+      <div class="panel-body" >
+        사진: {{truck.tname}}<br>
+        주인장 한마디: {{truck.tcomment}}<br>
+        별점: {{truck.tavg}}<br>
+        영업시간: {{truck.topen}} ~ {{truck.tclose}}<br>
+        <!-- 영업시간: {{}}<br>
+        영업시간: {{}}<br> -->
+      </div>
+      <div class="panel-footer clearfix">
+        <div class="pull-right">
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<app-truck-reviews></app-truck-reviews>
+<hr>
+<app-truck-reviews [tid]="tid"></app-truck-reviews>

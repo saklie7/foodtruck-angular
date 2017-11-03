@@ -17,7 +17,7 @@ export class GoogleMapService {
 
 
   getTruckAllList(): Observable<Truck[]> {
-    return this.http.get(this.truckUrl+"/getalltrucks")
+    return this.http.get(this.truckUrl)
       .map(response => response as Truck[])
       .catch(this.handleError);
   }

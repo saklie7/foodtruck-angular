@@ -6,4 +6,6 @@ export class Review {
   rdate: Date;
   rmember: string;
   rtruck: number;
+
+  rerror: string;
 }
