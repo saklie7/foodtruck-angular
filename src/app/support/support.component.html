@@ -1,3 +1,32 @@
-<p>
-  support works!
-</p>
+<div class="container">
+  <h2>고객센터 글</h2>
+  <table class="table table-condensed table-hover table-striped">
+    <thead>
+      <tr>
+        <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">No</th>
+        <th class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Title</th>
+        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Writer</th>
+        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of supports; let i = index">
+        <td>{{s.sid}}</td>
+        <!-- <td><a (click)="getSupport(s.sid)">{{s.stitle}}</a></td> -->
+        <td><a routerLink="{{s.sid}}">{{s.stitle}}</a></td>
+        <td>{{s.smember}}</td>
+        <td>{{s.sdate}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+      <ul class="pagination">
+      </ul>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <span class="pull-right"> <a routerLink="write" class="btn btn-primary">Write</a>
+				</span>
+    </div>
+  </div>
+</div>

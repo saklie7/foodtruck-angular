@@ -15,6 +15,9 @@ export class TopNavComponent implements OnInit {
   session: string;
   member: Member;
   email: string;
+  registype: number;
+  check:string;
+
 
   constructor(private authService: AuthenticationService, private router: Router) {
     this.session = sessionStorage.getItem('member');
@@ -22,13 +25,8 @@ export class TopNavComponent implements OnInit {
     if(this.session !== null) {
       let member = JSON.parse(this.session) as Member;
       this.email = member.memail;
+      this.registype = member.mregistype
     }
-    // if(this.session !== null){
-    //   this.member = JSON.parse(this.session);
-    //   this.email = this.member.memail;
-    // }
-    // this.email = this.member.memail;
-
   }
 
   ngOnInit() {
@@ -42,10 +40,27 @@ export class TopNavComponent implements OnInit {
             let member = JSON.parse(this.session) as Member;
             console.log('topnav='+member.memail);
             this.email = member.memail;
+            this.registype = member.mregistype;
           }
         }
       }
     );
+    this.authService.getObservable2().subscribe(
+      massege=>{
+        this.check = massege.check;
+        console.log(this.check);
+      });
+
+
+  }
+
+  check2(){
+    if(this.check=='0'&& this.registype==2){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   logout() {

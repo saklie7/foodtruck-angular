@@ -13,7 +13,6 @@ import { BarRatingModule } from "ngx-bar-rating";
 //component
 import { AppComponent } from './app.component';
 import { GoogleMapComponent } from './google-map/google-map.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MainHomeComponent } from './main-home/main-home.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { JoinPageComponent } from './join-page/join-page.component';
@@ -27,6 +26,8 @@ import { TruckInfoComponent } from './truck-info/truck-info.component';
 import { TruckReviewsComponent } from './truck-reviews/truck-reviews.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
 import { TruckRegistComponent } from './truck-regist/truck-regist.component';
+import { SupportDetailComponent } from './support/support-detail/support-detail.component';
+import { SupportWriteComponent } from './support/support-write/support-write.component';
 
 //service
 import { AuthenticationService } from './_services/authentication.service';
@@ -36,6 +37,8 @@ import { ReviewService } from './_services/review.service';
 import { GoogleMapService } from './_services/google-map.service';
 import { TruckService } from './_services/truck.service';
 import { UploadFileService } from './_services/file-upload.service';
+import { FoodService } from './_services/food.service';
+import { SupportService } from './_services/support.service';
 
 
 
@@ -43,7 +46,6 @@ import { UploadFileService } from './_services/file-upload.service';
   declarations: [
     AppComponent,
     GoogleMapComponent,
-    FileUploadComponent,
     MainHomeComponent,
     LoginPageComponent,
     JoinPageComponent,
@@ -57,6 +59,8 @@ import { UploadFileService } from './_services/file-upload.service';
     TruckReviewsComponent,
     MenuListComponent,
     TruckRegistComponent,
+    SupportDetailComponent,
+    SupportWriteComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +85,8 @@ import { UploadFileService } from './_services/file-upload.service';
     GoogleMapService,
     TruckService,
     UploadFileService,
-
+    FoodService,
+    SupportService,
   ],
   bootstrap: [AppComponent]
 })

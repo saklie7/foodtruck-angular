@@ -1,0 +1,89 @@
+
+<div class="container" *ngIf="!click">
+  <form class="form-horizontal">
+    <div class="form-group" hidden>
+			<label for="id" class="control-label col-xs-2">ID</label>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" name="id" value="{{sid}}" placeholder="id" required readonly>
+			</div>
+		</div>
+    <div class="form-group">
+      <label for="title" class="control-label col-xs-2">Title</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" id="title" name="title" placeholder="Title" required
+          value="{{title}}" readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="writer" class="control-label col-xs-2">Writer</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" id="writer" name="writer" placeholder="Writer" required
+          value="{{member}}" readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="content" class="control-label col-xs-2">Content</label>
+      <div class="col-xs-10">
+        <textarea class="form-control" rows="20" id="content" name="content" placeholder="Content" required
+          readonly>{{content}}</textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="regDate" class="control-label col-xs-2">Date</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" id="regDate" name="regDate" placeholder="Date" required
+        value="{{date}}"readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-offset-2 col-xs-10">
+        <a [routerLink]="['/support']" class="btn btn-primary">List</a>
+        <a *ngIf="check()" (click)="updateButton()" class="btn btn-primary">Update</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- click update button -->
+<div class="container" *ngIf="click">
+  <form class="form-horizontal"  #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <div class="form-group" hidden>
+			<label for="sid" class="control-label col-xs-2">ID</label>
+			<div class="col-xs-10">
+				<input type="text" class="form-control" [(ngModel)]="sid" name="sid" value="{{sid}}" placeholder="sid" required readonly>
+			</div>
+		</div>
+    <div class="form-group">
+      <label for="title" class="control-label col-xs-2">Title</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" [(ngModel)]="title" id="title" name="title" value="{{title}}" placeholder="Title" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="writer" class="control-label col-xs-2">Writer</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" id="writer" name="writer" placeholder="Writer" required
+          value="{{member}}" readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="content" class="control-label col-xs-2">Content</label>
+      <div class="col-xs-10">
+        <textarea class="form-control" rows="20" [(ngModel)]="content" id="content" name="content" placeholder="Content" required>{{content}}</textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="regDate" class="control-label col-xs-2">Date</label>
+      <div class="col-xs-10">
+        <input type="text" class="form-control" id="regDate" name="regDate" placeholder="Date" required
+        value="{{date}}"readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-offset-2 col-xs-10">
+        <a [routerLink]="['/support']" class="btn btn-primary">List</a>
+        <button type="button" (click)="submitForm(f)" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { FoodService } from '../_services/food.service';
+
 
 @Component({
   selector: 'app-menu-list',
@@ -6,24 +9,48 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu-list.component.css']
 })
 export class MenuListComponent implements OnInit {
-  images:any[] = [
-    {url:'/img/character_01.png'},
-    {url:'/img/character_02.png'},
-    {url:'/img/character_03.png'},
-    {url:'/img/character_04.png'},
-    {url:'/img/character_05.png'},
-    {url:'/img/character_06.png'},
-    {url:'/img/character_07.png'},
-    {url:'/img/character_08.png'},
-    {url:'/img/character_09.png'},
-    {url:'/img/character_10.png'},
-    {url:'/img/character_11.png'},
-    {url:'/img/character_12.png'},
-  ];
+  @Input('tid') tid: string;
 
-  constructor() { }
+  foods: object[] = [];
+
+  name: string;
+  price: string;
+  description: string;
+
+  selectedFiles: FileList;
+  currentFileUpload: File;
+
+  constructor(private foodService: FoodService) { }
 
   ngOnInit() {
+    this.foodService.getObservable().subscribe(
+      messege => {
+        if (messege.result = 'ok') {
+          this.foodService.getAllfoods(this.tid).subscribe(res => {
+            console.log(res.json())
+            this.foods = res.json();
+          });
+        }
+      })
+    // this.foodServiceService.getAllfoods().subscribe(res => {
+    //   console.log(res.json())
+    //   this.foods = res.json();
+    // });
+    this.foodService.getAllfoods(this.tid).subscribe(res => {
+      console.log(res.json())
+      this.foods = res.json();
+    });
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  onSubmit(f) {
+    f.value.file = this.selectedFiles.item(0);
+    console.log(f.value.file)
+    console.log(f.value);
+    this.foodService.foodRegist(f.value.name, f.value.price, f.value.description, f.value.file, this.tid);
   }
 
 }

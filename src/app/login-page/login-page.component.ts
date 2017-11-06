@@ -30,6 +30,7 @@ export class LoginPageComponent implements OnInit {
         console.log('login member = '+member.memail)
         if(member.merror === null) {
           this.session = sessionStorage.getItem('member');
+          this.authService.checkTruck(this.model.memail);
           this.router.navigate(['/']);
         } else {
           this.session = null;
@@ -44,6 +45,9 @@ export class LoginPageComponent implements OnInit {
         //   this.router.navigate(['/']);
         // }
       });
+
   }
+
+
 
 }

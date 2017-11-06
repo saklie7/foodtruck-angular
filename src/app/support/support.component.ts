@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import {SupportService} from '../_services/support.service';
 
 @Component({
   selector: 'app-support',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupportComponent implements OnInit {
 
-  constructor() { }
+  supports: object[] = [];
+
+  constructor(private supportService: SupportService,  private router:Router) { }
 
   ngOnInit() {
+    this.supportService.getList().subscribe(res => {
+      console.log(res.json());
+      this.supports = res.json();
+    });
   }
-
 }

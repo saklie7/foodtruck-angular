@@ -1,6 +1,36 @@
 <h2>truck-reviews works!</h2>
 <h4>tID ::: {{tid}}</h4>
-<div class="bs-example container">
+<div class="container">
+  <div class="row">
+    <h3>트럭 {{tid}}번의 리뷰</h3>
+    <!-- 화면에 결과 메세지를 띄우고 싶을 때, 지금은 alert사용 -->
+    <div *ngIf="message" class="alert alert-info">{{message}}</div>
+    <div  class="col-md-6" *ngFor="let r of truckReviews">
+      <div class="panel panel-default">
+        <div class="panel-heading" >리뷰 번호: {{r.rid}}</div>
+        <div class="panel-body" >
+          <div class="col-sm-3" *ngIf="r.rimage">
+            <img src="http://{{r.rimage}}" alt="" width="100px" height="100px">
+          </div>
+          <div class="col-sm-9">
+            해당트럭: {{r.rtruck}}<br>
+            내용: {{r.rcomment}}<br>
+            점수: {{r.rscore}}<br>
+            작성일: {{r.rdate}}<br>
+            작성자: {{r.rmember}}<br>
+          </div>
+        </div>
+        <!-- <div class="panel-footer clearfix" *ngIf="myreview">
+          <div class="pull-right">
+            <a [routerLink]="['/reviews']" class="text-warning" (click)="removeReview(r)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
   <form class="form-horizontal" name="form" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
     <div class="form-group">
       <label for="comment" class="control-label col-xs-2">글내용</label>
@@ -27,34 +57,4 @@
       </div>
     </div>
   </form>
-
-  <div class="row">
-    <h3>트럭 {{tid}}번의 리뷰</h3>
-    <!-- 화면에 결과 메세지를 띄우고 싶을 때, 지금은 alert사용 -->
-    <div *ngIf="message" class="alert alert-info">{{message}}</div>
-    <div  class="col-md-4" *ngFor="let r of truckReviews">
-      <div class="panel panel-default">
-        <div class="panel-heading" >리뷰 번호: {{r.rid}}</div>
-        <div class="panel-body" >
-          <div class="" *ngIf="r.rimage">
-            <img src="http://{{r.rimage}}" alt="" width="100px" height="100px">
-          </div>
-          <div class="">
-            해당트럭: {{r.rtruck}}<br>
-            사진: {{r.rimage}}<br>
-            내용: {{r.rcomment}}<br>
-            점수: {{r.rscore}}<br>
-            작성일: {{r.rdate}}<br>
-          </div>
-        </div>
-        <div class="panel-footer clearfix">
-          <div class="pull-right">
-            <a [routerLink]="['/reviews']" class="text-warning" (click)="removeReview(r)">
-              <span class="glyphicon glyphicon-remove"></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

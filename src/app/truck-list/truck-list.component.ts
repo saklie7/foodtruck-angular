@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { TruckService } from '../_services/truck.service'
 
 @Component({
@@ -12,11 +14,11 @@ export class TruckListComponent implements OnInit {
   trucks: object[] = [
   ];
 
-
-
   currentFileUpload: File
 
-  constructor(private truckService: TruckService) { }
+  constructor(
+    private truckService: TruckService,
+    private router: Router) { }
 
   ngOnInit() {
     this.truckService.truckgetAll().subscribe(res => {
@@ -31,7 +33,10 @@ export class TruckListComponent implements OnInit {
       console.log(res.json());
       // this.trucks=res.json();
     });
+  }
 
-
+  getFoodTruck(tid: string) {
+    console.log(tid);
+    this.router.navigate(["truck-info", tid]);
   }
 }

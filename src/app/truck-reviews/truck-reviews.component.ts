@@ -38,28 +38,46 @@ export class TruckReviewsComponent implements OnInit {
     this.getTruckReview(this.tid);
   }
 
-  // getTruckReview(tid:string) {
-  //   this.reviewService.getTruckReview(tid)
-  //     .subscribe(result => {
-  //       // console.log('reviewService myReviews='+result);
-  //       console.log(result);
-  //       result.map(res => {
-  //         // res as Review;
-  //         // console.log(result)
-  //         if(res.rerror !== null){
-  //           this.message = res.rerror;
-  //         } else {
-  //           this.truckReviews = result;
-  //         }
-  //       });
-  //     });
-  // }
+  //사진올리기
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  onSubmit(f) {
+    f.value.image = this.selectedFiles.item(0);
+    console.log(f.value);
+    this.addReview(f.value.comment, f.value.image, f.value.score, this.member.memail, this.tid);
+  }
+
+  addReview(comment:string, image:File, score:string, email:string, truck:string) {
+    this.reviewService.addReview(comment, image, score, email, truck)
+      .subscribe(res => {
+        console.log('addReview = '+res);
+        // this.message = res;
+        alert(res);
+        this.getTruckReview(truck);
+      });
+  }
+
+  removeReview(review:Review) {
+    this.reviewService.removeReview(review)
+      .subscribe(result => {
+        // this.message = result;
+        alert(result);
+        this.getTruckReview(this.tid);
+      }
+    );
+  }
+
+  //내가 적은 리뷰인지 확인해서 삭제할 수 있는 기능을 넣는다.
+  checkMyReview(){
+
+  }
 
   getTruckReview(tid:string) {
     this.reviewService.getTruckReview(tid)
       .subscribe(result => {
         result as Review[];
-        // if(result.)
         this.truckReviews = result;
         // console.log('reviewService myReviews='+result);
         console.log(result);
@@ -74,32 +92,5 @@ export class TruckReviewsComponent implements OnInit {
         });
       });
   }
-
-  //사진올리기
-  selectFile(event) {
-    this.selectedFiles = event.target.files;
-  }
-
-  onSubmit(f) {
-    f.value.image = this.selectedFiles.item(0);
-
-    console.log(f.value);
-    this.addReview(f.value.comment, f.value.image, f.value.score, this.member.memail, this.tid);
-
-    // this.truckService.truckRegist(f.value.name, f.value.open, f.value.close, f.value.lat, f.value.lng, f.value.comment, f.value.file);
-    // this.truckService.truckRegist(f.value.name, f.value.open, f.value.close,
-    //   f.value.lat, f.value.lng, f.value.comment, f.value.file, this.member.memail);
-  }
-
-  addReview(comment:string, image:File, score:string, email:string, truck:string) {
-    this.reviewService.addReview(comment, image, score, email, truck)
-      .subscribe(res => {
-        console.log('addReview = '+res);
-        // this.message = res;
-        alert(res);
-        this.getTruckReview(truck);
-      });
-  }
-
 
 }

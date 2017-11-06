@@ -22,6 +22,46 @@ export class ReviewService {
     console.log('review service # constructor # session =' + this.session);
   }
 
+  addReview(comment:string, image:File, score:string, email:string, truck:string): Observable<string> {
+    var url = `${this.reviewUrl}/post`;
+    // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
+    let formdata: FormData = new FormData();
+
+    formdata.append('comment', comment);
+    formdata.append('image', image);
+    formdata.append('score', score);
+    formdata.append('email', email);
+    formdata.append('truck', truck);
+    // let review = { "rComment":comment, "rImage": image, "rScore":score, "rMember":email, "rTruck":truck };
+    // console.log('add review info = ' + JSON.stringify(review.rImage));
+    console.log('reivew 1='+formdata.get('comment'));
+    console.log('reivew 2='+formdata.get('image'));
+    console.log('reivew 3='+formdata.get('score'));
+    console.log('reivew 4='+formdata.get('email'));
+    console.log('reivew 5='+formdata.get('truck'));
+
+    return this.http.post(url, formdata)
+      // .map(this.extractDataForObject)
+      .map(res => {
+        let json = res.text();
+        console.log('json='+json)
+        return json || {};
+      })
+      ._catch(this.handleError);
+  }
+
+  removeReview(review:Review): Observable<string> {
+    let url = `${this.reviewUrl}/delete/${review.rid}`;
+    console.log('review remove url= '+url);
+    return this.http.delete(url, {headers:this.headers})
+      .map(res => {
+        let json = res.text();
+        return json || {};
+      })
+      ._catch(this.handleError);
+  }
+
   //내가 등록한 리뷰를 가져온다.
   getMyReview(): Observable<Review[]> {
     console.log('review service # getMyReview # session =' + this.session);
@@ -56,45 +96,6 @@ export class ReviewService {
       ._catch(this.handleError);
   }
 
-  addReview(comment:string, image:File, score:string, email:string, truck:string): Observable<string> {
-    var url = this.reviewUrl;
-    // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-    // let options = new RequestOptions({ headers: headers });
-    let formdata: FormData = new FormData();
-
-    formdata.append('comment', comment);
-    formdata.append('image', image);
-    formdata.append('score', score);
-    formdata.append('email', email);
-    formdata.append('truck', truck);
-    // let review = { "rComment":comment, "rImage": image, "rScore":score, "rMember":email, "rTruck":truck };
-    // console.log('add review info = ' + JSON.stringify(review.rImage));
-    console.log('reivew 1='+formdata.get('comment'));
-    console.log('reivew 2='+formdata.get('image'));
-    console.log('reivew 3='+formdata.get('score'));
-    console.log('reivew 4='+formdata.get('email'));
-    console.log('reivew 5='+formdata.get('truck'));
-
-    return this.http.post(url, formdata)
-      // .map(this.extractDataForObject)
-      .map(res => {
-        let json = res.text();
-        console.log('json='+json)
-        return json || {};
-      })
-      ._catch(this.handleError);
-  }
-
-  removeReview(review:Review): Observable<string> {
-    let url = `${this.reviewUrl}/${review.rid}`;
-    console.log('review remove url= '+url);
-    return this.http.delete(url, {headers:this.headers})
-      .map(res => {
-        let json = res.text();
-        return json || {};
-      })
-      ._catch(this.handleError);
-  }
 
   private extractDataForObject(res: Response) {
     let json = res.text();

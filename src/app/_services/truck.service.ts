@@ -15,7 +15,14 @@ export class TruckService {
   private subject = new Subject<any>();
   private truckUrl: string = "http://localhost:8080/trucks";
 
+
   constructor(private http: Http) { }
+
+
+  getObservable(): Observable<any> {
+    console.log('getObservable() working');
+    return this.subject.asObservable();
+  }
 
   // truckRegist(name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File) {
   truckRegist(name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File, email:string) {
@@ -48,9 +55,11 @@ export class TruckService {
         console.log(formdata.get('file'));
         console.log(formdata.get('email'));
 
-        return this.http.post(url, formdata).subscribe();
-      })
 
+        return this.http.post(url, formdata).subscribe(()=>{
+          this.subject.next({check:'true'})}
+        );
+      })
   }
 
   truckgetAll(): Observable<any> {

@@ -17,6 +17,7 @@ export class AuthenticationService {
 
   // private loggedIn = new Subject<boolean>();
   private subject = new Subject<any>();
+    private subject2 = new Subject<any>();
   private session: string;
 
   constructor(
@@ -28,6 +29,21 @@ export class AuthenticationService {
     console.log('getObservable() working');
     return this.subject.asObservable();
   }
+  getObservable2(): Observable<any> {
+    console.log('getObservable() working');
+    return this.subject2.asObservable();
+  }
+
+  checkTruck(email:string){
+    const url = `http://localhost:8080/trucks/member/${email}`;
+    console.log(url);
+    this.http.get(url).subscribe(res=>{
+      console.log(res.text());
+        this.subject2.next({check:res.text()});
+    });
+
+  }
+
 
   login(email: string, password: string): Promise<string> {
     const url = `${this.loginUrl}/login`;

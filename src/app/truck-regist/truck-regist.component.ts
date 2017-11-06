@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TruckService } from '../_services/truck.service';
-
+import {AuthenticationService} from '../_services/authentication.service'
 import { Member } from '../_models/member.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class TruckRegistComponent implements OnInit {
   session: string;
   member: Member;
 
-  constructor(private truckService: TruckService) { }
+  constructor(private truckService: TruckService, private authenticationService:AuthenticationService) { }
 
   ngOnInit() {
     //2
@@ -47,6 +47,14 @@ export class TruckRegistComponent implements OnInit {
     // this.truckService.truckRegist(f.value.name, f.value.open, f.value.close, f.value.lat, f.value.lng, f.value.comment, f.value.file);
     this.truckService.truckRegist(f.value.name, f.value.open, f.value.close,
       f.value.lat, f.value.lng, f.value.comment, f.value.file, this.member.memail);
+
+      this.truckService.getObservable().subscribe(message=>{
+        if(message.check=='true'){
+            this.authenticationService.checkTruck(this.member.memail);
+        }
+      })
+
+
   }
 
   private setCurrentPosition() {

@@ -13,6 +13,9 @@ import { TruckInfoComponent } from './truck-info/truck-info.component';
 import { TruckReviewsComponent } from './truck-reviews/truck-reviews.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
 import { TruckRegistComponent } from './truck-regist/truck-regist.component';
+import { SupportWriteComponent } from './support/support-write/support-write.component';
+import { SupportDetailComponent } from './support/support-detail/support-detail.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/main-home', pathMatch: 'full' },
@@ -24,6 +27,8 @@ const routes: Routes = [
   { path: 'truck-list', component: TruckListComponent},
   { path: 'favorites', component: FavoritesComponent},
   { path: 'support', component: SupportComponent},
+  { path: 'support/:sid', component: SupportDetailComponent},
+  { path: 'support/write', component: SupportWriteComponent},
   { path: 'reviews', component: ReviewsComponent},
   { path: 'menu-list', component: MenuListComponent},
   { path: 'truck-info/:tid', component: TruckInfoComponent},

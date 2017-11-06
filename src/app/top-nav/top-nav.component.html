@@ -1,6 +1,5 @@
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
 				data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -9,31 +8,26 @@
 			</button>
 			<a class="navbar-brand" routerLink="">Home</a>
 		</div>
-    <!-- truck-map truck-list truck-info truck-reviews truck-regist favorites reviews support -->
-		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-        <!-- <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false"><span class="badge">메뉴</span> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
             <li routerLinkActive="active"><a routerLink="truck-map">트럭지도</a></li>
     				<li routerLinkActive="active"><a routerLink="truck-list">트럭리스트</a></li>
-    				<li routerLinkActive="active"><a routerLink="truck-review">트럭리뷰</a></li>
-    				<li routerLinkActive="active"><a routerLink="truck-regist">트럭등록</a></li>
+
+            <li routerLinkActive="active" *ngIf="check2()"><a routerLink="truck-regist">트럭등록</a></li>
+
+
+
+            <li routerLinkActive="active"><a routerLink="truck-info/{{tid}}">나의트럭가기</a></li>
+            <li routerLinkActive="active"><a routerLink="canival">축제</a></li>
     				<li routerLinkActive="active"><a routerLink="support">고객센터</a></li>
 					</ul>
-				</li> -->
-				<li routerLinkActive="active"><a routerLink="truck-map">트럭지도</a></li>
-				<li routerLinkActive="active"><a routerLink="truck-list">트럭리스트</a></li>
-				<li routerLinkActive="active"><a routerLink="menu-list">푸드</a></li>
-				<!-- <li routerLinkActive="active"><a routerLink="truck-info">트럭정보</a></li> -->
-				<li routerLinkActive="active"><a routerLink="truck-reviews">트럭리뷰</a></li>
-				<li routerLinkActive="active"><a routerLink="truck-regist">트럭등록</a></li>
-				<li routerLinkActive="active"><a routerLink="support">고객센터</a></li>
+				</li>
 			</ul>
       <ul class="nav navbar-nav navbar-right">
         <li role="separator" class="divider"></li>
-        <!-- <li *ngIf="email !== null"><a ng-click="logout()" routerLink="login">Logout</a></li> -->
         <li *ngIf="!session"><a routerLink="join-page">join-page</a></li>
         <li *ngIf="!session"><a routerLink="login-page">Login</a></li>
 
@@ -50,7 +44,5 @@
 
       </ul>
 		</div>
-		<!-- /.navbar-collapse -->
 	</div>
-	<!-- /.container-fluid -->
 </nav>
