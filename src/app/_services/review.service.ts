@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import { Review } from '../_models/review.model';
 import { Member } from '../_models/member.model';
@@ -8,6 +10,7 @@ import { Member } from '../_models/member.model';
 
 @Injectable()
 export class ReviewService {
+  private subject = new Subject<any>();
 
   private reviewUrl: string = "http://localhost:8080/reviews";
   private headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
@@ -22,7 +25,11 @@ export class ReviewService {
     console.log('review service # constructor # session =' + this.session);
   }
 
-  addReview(comment:string, image:File, score:string, email:string, truck:string): Observable<string> {
+  getObservable(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  addReview(comment:string, image:File, score:string, email:string, truck:string) {
     var url = `${this.reviewUrl}/post`;
     // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
@@ -37,6 +44,33 @@ export class ReviewService {
     // console.log('add review info = ' + JSON.stringify(review.rImage));
     console.log('reivew 1='+formdata.get('comment'));
     console.log('reivew 2='+formdata.get('image'));
+    console.log('reivew 3='+formdata.get('score'));
+    console.log('reivew 4='+formdata.get('email'));
+    console.log('reivew 5='+formdata.get('truck'));
+
+    return this.http.post(url, formdata).subscribe(res => this.subject.next({ result: 'ok' }));
+      // .map(res => {
+      //   let json = res.text();
+      //   console.log('json='+json)
+      //   return json || {};
+      // })
+      // ._catch(this.handleError);
+  }
+
+
+  addReview2(comment:string, score:string, email:string, truck:string): Observable<string> {
+    var url = `${this.reviewUrl}/post2`;
+    // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
+    let formdata: FormData = new FormData();
+
+    formdata.append('comment', comment);
+    formdata.append('score', score);
+    formdata.append('email', email);
+    formdata.append('truck', truck);
+    // let review = { "rComment":comment, "rImage": image, "rScore":score, "rMember":email, "rTruck":truck };
+    // console.log('add review info = ' + JSON.stringify(review.rImage));
+    console.log('reivew 1='+formdata.get('comment'));
     console.log('reivew 3='+formdata.get('score'));
     console.log('reivew 4='+formdata.get('email'));
     console.log('reivew 5='+formdata.get('truck'));
@@ -77,13 +111,6 @@ export class ReviewService {
   }
 
   getTruckReview(tid:string): Observable<Review[]> {
-    // console.log('review service # getTruckReview # session =' + this.session);
-    // if(this.session !== null){
-    //   this.member = JSON.parse(this.session);
-    // }
-    //트럭아이디를 어떻게 가져 올 것인가? ----------
-    // var email = this.member.memail;
-
     var url = `${this.reviewUrl}/truck/${tid}`;
     console.log('review url='+url);
     return this.http.get(url)

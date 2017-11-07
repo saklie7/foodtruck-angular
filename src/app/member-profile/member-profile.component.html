@@ -1,0 +1,22 @@
+<div class="container">
+  <form #f="ngForm" (ngSubmit)="memberModify(f)">
+    <div class="">
+      <label for="memail">아이디(Email) : </label>
+      <span>{{member.memail}}</span>
+    </div>
+    <div class="">
+      <label for="mpassword">비밀번호 : </label>
+      <input type="password" name="mpassword" value="{{member.mpassword}}">
+    </div>
+    <div class="">
+      <label for="mnickname">별명 : </label>
+      <input type="text" name="mnickname" value="{{member.mnickname}}">
+    </div>
+    <div class="" *ngIf="member.mregistype === 2">
+      회원 분류 : 사업자
+    </div>
+    <button type="submit" class="btn btn-info" name="button">저장</button>
+    <button type="button" class="btn btn-warn" (click)="pathToMain()">취소</button>
+  </form>
+  회원 분류 : {{member.mregistype}}
+</div>

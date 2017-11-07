@@ -12,10 +12,10 @@
   <br>
   <div class="container">
     <div class="row">
-      <div class="col-md-12" *ngFor="let t of trucks; let i = index">
+      <div class="col-md-12" *ngFor="let t of trucks">
         <div class="panel panel-default">
           <div class="panel-heading">
-            번호 {{i+1}}
+            번호 {{t.tid}}
             <div class="pull-right">
               <button type="button" class="btn btn-xs btn-primary" (click)="getFoodTruck(t.tid)">바로가기</button>
             </div>

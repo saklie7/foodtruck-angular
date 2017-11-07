@@ -17,7 +17,7 @@ export class AuthenticationService {
 
   // private loggedIn = new Subject<boolean>();
   private subject = new Subject<any>();
-    private subject2 = new Subject<any>();
+  private subject2 = new Subject<any>();
   private session: string;
 
   constructor(
@@ -29,21 +29,30 @@ export class AuthenticationService {
     console.log('getObservable() working');
     return this.subject.asObservable();
   }
+
   getObservable2(): Observable<any> {
     console.log('getObservable() working');
     return this.subject2.asObservable();
   }
 
-  checkTruck(email:string){
+  // checkTruck(email:string) {
+  //   const url = `http://localhost:8080/trucks/member/${email}`;
+  //   console.log(url);
+  //   this.http.get(url).subscribe(res=>{
+  //     console.log(res.text());
+  //     this.subject2.next({check:res.text()});
+  //     return res.text();
+  //   });
+  // }
+
+  checkTruck(email: string) {
     const url = `http://localhost:8080/trucks/member/${email}`;
     console.log(url);
-    this.http.get(url).subscribe(res=>{
-      console.log(res.text());
-        this.subject2.next({check:res.text()});
+    this.http.get(url).subscribe(res => {
+      console.log('serivce' + res.text());
+      this.subject2.next({ check: res.text() });
     });
-
   }
-
 
   login(email: string, password: string): Promise<string> {
     const url = `${this.loginUrl}/login`;
@@ -52,25 +61,10 @@ export class AuthenticationService {
     let member = { "mEmail": email, "mPassword": password }
     console.log('member = ' + JSON.stringify(member));
 
-    // return this.http.post(url, JSON.stringify(member), options).toPromise().then(
-    //   res => {
-    //     let json = res.text();
-    //     console.log("service login =" + json);
-    //     if(json === "fail") {
-    //       return json || {};
-    //     } else {
-    //       // json = JSON.parse(json);
-    //       sessionStorage.setItem('member', json);
-    //       //이때, top-nav로 가서 처리
-    //       this.subject.next({ json });
-    //       return json || {};
-    //     }
-    //
-    //   });
     return this.http.post(url, JSON.stringify(member), options).toPromise().then(
       res => {
         let member = res.json() as Member;
-        console.log('error ='+member.merror);
+        console.log('error =' + member.merror);
         if (member.merror !== null) {
           return JSON.stringify(member) || {};
         } else {

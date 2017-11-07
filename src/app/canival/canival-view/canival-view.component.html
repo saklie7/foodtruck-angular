@@ -1,0 +1,44 @@
+<div class="container">
+  <table class="table table-hover">
+    <colgroup>
+      <col width="7%">
+      <col width="*">
+      <col width="15%">
+      <col width="10%">
+      <col width="7%">
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="text-align:center">글 번호</th>
+        <th style="text-align:center">제목</th>
+        <th style="text-align:center">작성자</th>
+        <th style="text-align:center">시작일</th>
+        <th style="text-align:center">종료일</th>
+        <th style="text-align:center">조회수</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of canival">
+        <td style="text-align:center">{{c.cid}}</td>
+        <td style="text-align:center"><a (click)="getCanivalDetail(c.cid)">{{c.ctitle}}</a></td>
+        <td style="text-align:center">관리자</td>
+        <td style="text-align:center">{{c.csdate}}</td>
+        <td style="text-align:center">{{c.cedate}}</td>
+        <td style="text-align:center">{{c.cviewcnt}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr/>
+  <a class="btn btn-default pull-right" [routerLink]="['/canival-write']">글쓰기</a>
+
+  <div class="text-center">
+    <ul class="pagination">
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+    </ul>
+  </div>
+</div>

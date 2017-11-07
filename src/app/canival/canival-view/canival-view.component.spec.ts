@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CanivalComponent } from './canival.component';
+import { CanivalViewComponent } from './canival-view.component';
 
-describe('CanivalComponent', () => {
-  let component: CanivalComponent;
-  let fixture: ComponentFixture<CanivalComponent>;
+describe('CanivalViewComponent', () => {
+  let component: CanivalViewComponent;
+  let fixture: ComponentFixture<CanivalViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CanivalComponent ]
+      declarations: [ CanivalViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CanivalComponent);
+    fixture = TestBed.createComponent(CanivalViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

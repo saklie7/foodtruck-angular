@@ -5,15 +5,15 @@
       <div class="panel panel-default">
         <div class="panel-heading" >트럭 번호: {{tid}}</div>
         <div class="panel-body" >
-          <div class="col-sm-3">
-            <img src="http://{{truck.timage}}" alt="image X" width="100px" height="100px">
+          <div class="col-md-2 col-sm-4">
+            <img src="http://{{timage}}" alt="image X" width="150px" height="150px">
           </div>
-          <div class="col-sm-9">
-            이름: {{truck.tname}}<br>
-            주인장 한마디: {{truck.tcomment}}<br>
-            별점: {{truck.tavg}}<br>
-            영업시간: {{truck.topen}} ~ {{truck.tclose}}<br>
-            주소: {{truck.taddress}}<br>
+          <div class="col-md-10 col-sm-8">
+            이름: {{tname}}<br>
+            주인장 한마디: {{tcomment}}<br>
+            별점: {{tavg}}<br>
+            영업시간: {{topen}} ~ {{tclose}}<br>
+            주소: {{taddress}}<br>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
   </div>
 
   <hr>
-  <app-truck-reviews [tid]="tid"></app-truck-reviews>
+  <app-truck-reviews [tid]="tid" ></app-truck-reviews>
   <hr><hr>
-  <app-menu-list [tid]="tid"></app-menu-list>
+  <app-menu-list [tid]="tid" [tmember]="tmember"></app-menu-list>
 </div>

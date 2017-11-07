@@ -26,6 +26,9 @@ export class TruckReviewsComponent implements OnInit {
   selectedFiles: FileList;
   currentFileUpload: File;
 
+  //pagination
+  p: number = 1;
+
   constructor(private http: Http, private router:Router, private reviewService: ReviewService) {
     //로그인한 회원의 정보 구하기
     var session = sessionStorage.getItem('member');
@@ -36,6 +39,15 @@ export class TruckReviewsComponent implements OnInit {
 
   ngOnInit() {
     this.getTruckReview(this.tid);
+    this.reviewService.getObservable().subscribe(
+      messege => {
+        if (messege.result = 'ok') {
+          this.reviewService.getTruckReview(this.tid).subscribe(res => {
+            console.log(res)
+            this.truckReviews = res;
+          });
+        }
+      })
   }
 
   //사진올리기
@@ -44,13 +56,21 @@ export class TruckReviewsComponent implements OnInit {
   }
 
   onSubmit(f) {
-    f.value.image = this.selectedFiles.item(0);
-    console.log(f.value);
-    this.addReview(f.value.comment, f.value.image, f.value.score, this.member.memail, this.tid);
+    if(this.selectedFiles === undefined){
+        this.addReview2(f.value.comment, f.value.score, this.member.memail, this.tid);
+    } else {
+      f.value.image = this.selectedFiles.item(0);
+      console.log(f.value);
+      this.addReview(f.value.comment, f.value.image, f.value.score, this.member.memail, this.tid);
+    }
   }
 
   addReview(comment:string, image:File, score:string, email:string, truck:string) {
     this.reviewService.addReview(comment, image, score, email, truck)
+  }
+
+  addReview2(comment:string, score:string, email:string, truck:string) {
+    this.reviewService.addReview2(comment, score, email, truck)
       .subscribe(res => {
         console.log('addReview = '+res);
         // this.message = res;
@@ -69,21 +89,12 @@ export class TruckReviewsComponent implements OnInit {
     );
   }
 
-  //내가 적은 리뷰인지 확인해서 삭제할 수 있는 기능을 넣는다.
-  checkMyReview(){
-
-  }
 
   getTruckReview(tid:string) {
     this.reviewService.getTruckReview(tid)
       .subscribe(result => {
         result as Review[];
-        this.truckReviews = result;
-        // console.log('reviewService myReviews='+result);
-        console.log(result);
         result.map(res => {
-          // res as Review;
-          // console.log(result)
           if(res.rerror !== null){
             this.message = res.rerror;
           } else {

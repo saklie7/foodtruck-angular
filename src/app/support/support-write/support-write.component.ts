@@ -30,7 +30,7 @@ export class SupportWriteComponent implements OnInit {
 
   onSubmit(f) {
     console.log(f.value)
-    this.supportService.support(f.value, this.email);
+    this.supportService.addSupport(f.value, this.member);
 
     this.supportService.getObservable().subscribe(message=>{
       if(message.result=='ok'){
