@@ -3,7 +3,7 @@
     <h3>{{member.mnickname}} 님의 리뷰</h3>
     <!-- 화면에 결과 메세지를 띄우고 싶을 때, 지금은 alert사용 -->
     <!-- <div *ngIf="message" class="alert alert-info">{{message}}</div> -->
-    <div  class="col-md-4" *ngFor="let r of myReviews  | paginate: {itemsPerPage: 5,
+    <div  class="col-md-12" *ngFor="let r of myReviews  | paginate: {itemsPerPage: 5,
                                                                     currentPage: p}">
       <div class="panel panel-default">
         <div class="panel-heading" >리뷰 번호: {{r.rid}}</div>

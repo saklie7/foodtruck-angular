@@ -61,6 +61,8 @@ export class TruckInfoComponent implements OnInit {
   relat: number;
   relng: number;
 
+  email: string;
+
   @ViewChild(AgmMap)
   public agmMap: AgmMap;
 
@@ -76,6 +78,10 @@ export class TruckInfoComponent implements OnInit {
     private router: Router,
   ) {
     this.session = sessionStorage.getItem('member');
+    if(this.session !== null) {
+      let member = JSON.parse(this.session) as Member;
+      this.email = member.memail;
+    }
   }
 
   ngOnInit() {
@@ -111,6 +117,15 @@ export class TruckInfoComponent implements OnInit {
         this.getTruckInfo(this.tid);
       }
     });
+  }
+
+  //주인인지 아닌지를 확인
+  check2() {
+    if(this.email === this.tmember) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getTruckInfo(tid: string) {

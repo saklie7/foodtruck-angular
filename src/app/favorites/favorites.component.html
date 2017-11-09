@@ -1,18 +1,4 @@
 <div class="bs-example container">
-  <!-- <form class="form-horizontal" name="form" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
-    <div class="form-group">
-      <label for="htruck" class="control-label col-xs-2">truckID</label>
-      <div class="col-xs-10">
-        <input type="text" class="form-control" [(ngModel)]="htruck" name="htruck" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-offset-2 col-xs-10">
-        <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
-        <button type="submit" class="btn btn-primary">Add</button>
-      </div>
-    </div>
-  </form> -->
 
   <div class="row">
     <h3>{{member.mnickname}} 님의 즐겨찾기</h3>
@@ -20,7 +6,12 @@
     <div  class="col-md-6" *ngFor="let h of hotlistDetail  | paginate: {itemsPerPage: 5,
                                                                         currentPage: p}">
       <div class="panel panel-default">
-        <div class="panel-heading" >즐겨찾기 번호: {{h.hid}}</div>
+        <div class="panel-heading" >
+          즐겨찾기 번호: {{h.hid}}
+          <div class="pull-right">
+            <button type="button" class="btn btn-xs btn-default" (click)="getFoodTruck(h.tid)">바로가기</button>
+          </div>
+        </div>
         <div class="panel-body" >
           <div class="col-sm-3">
             <img src="http://localhost:8080/image/{{h.timage}}" alt="image X" width="100px" height="100px">

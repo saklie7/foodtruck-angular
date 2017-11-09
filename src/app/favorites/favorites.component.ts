@@ -42,23 +42,6 @@ export class FavoritesComponent implements OnInit {
       });
   }
 
-  // onSubmit(f) {
-  //   if (f.valid) {
-  //     this.addHotlist(this.member.memail, f.value.htruck);
-  //   }
-  // }
-
-  // addHotlist(hmember: string, htruck: string) {
-  //   this.hotlistService.addHotlist(hmember, htruck)
-  //     .subscribe(result => {
-  //       // alert(result.herror);
-  //       this.errorMessage = result.herror;
-  //       //실제로 추가할 때는 필요없습니다.
-  //       //지금은 테스트상으로 넣어둠.
-  //       this.getHotlistDetail();
-  //     });
-  // }
-
   removeHotlist(hotlistdetail: HotlistDetail) {
     this.hotlistService.removeHotlist(hotlistdetail)
       .subscribe(result => {
@@ -68,10 +51,9 @@ export class FavoritesComponent implements OnInit {
       });
   }
 
-  // removeMember(hotlistDetail: HotlistDetail) {
-  //   this.hotlistService.removeHotlist(hotlistDetail)
-  //     .subscribe(hotlistDetail => this.hotlistDetail = hotlistDetail, error => this.errorMessage = <any>error)
-  // }
-
+  getFoodTruck(tid: string) {
+    console.log(tid);
+    this.router.navigate(["truck-info", tid]);
+  }
 
 }
