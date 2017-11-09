@@ -3,25 +3,126 @@
   <div class="row">
     <div  class="col-md-12">
       <div class="panel panel-default">
-        <div class="panel-heading" >트럭 번호: {{tid}}</div>
-        <div class="panel-body" >
-          <div class="col-md-2 col-sm-4">
-            <img src="http://{{timage}}" alt="image X" width="150px" height="150px">
+        <div class="panel-heading">트럭 번호: {{tid}}
+          <div class="pull-right">
+            <button type="button" class="btn btn-xs btn-default" *ngIf="check" (click)="favorite(tid)">즐겨찾기 추가</button>
           </div>
-          <div class="col-md-10 col-sm-8">
-            이름: {{tname}}<br>
+        </div>
+        <div class="panel-body" >
+          <div class="col-sm-3">
+            <img src="http://localhost:8080/image/{{timage}}" alt="image X" width="100px" height="100px">
+          </div>
+          <div class="col-sm-9">
+            가게: {{tname}}<br>
+            <div class="rating label-left">
+              <div class="lavel-value">{{tavg}}</div>
+              <div class="star-container">
+                <star-rating-comp
+                  [starType]="'svg'"
+                  [hoverEnabled]="false"
+                  [size]="'medium'"
+                  [direction]="'ltr'"
+                  [rating]="tavg"
+                  [step]="0.1"
+                  [showHalfStars]="true"
+                  [readOnly]="true">
+              </star-rating-comp>
+              </div>
+            </div>
             주인장 한마디: {{tcomment}}<br>
-            별점: {{tavg}}<br>
             영업시간: {{topen}} ~ {{tclose}}<br>
             주소: {{taddress}}<br>
+          </div>
+        </div>
+        <div class="panel-footer clearfix" >
+          <div class="pull-right">
+            <button (click)="ngxSmartModalService.getModal('myModal').open() ; editTruck(f)">Open myModal</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <hr>
-  <app-truck-reviews [tid]="tid" ></app-truck-reviews>
   <hr><hr>
-  <app-menu-list [tid]="tid" [tmember]="tmember"></app-menu-list>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#menu">메뉴보기</a></li>
+    <li><a data-toggle="tab" href="#reviews">리뷰보기</a></li>
+    <li><a data-toggle="tab" href="#location">트럭위치</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="menu" class="tab-pane fade in active">
+      <app-menu-list [tid]="tid" [tmember]="tmember"></app-menu-list>
+    </div>
+    <div id="reviews" class="tab-pane fade">
+      <app-truck-reviews [tid]="tid"></app-truck-reviews>
+    </div>
+    <div id="location" class="tab-pane fade">
+      <p>트럭 위치</p>
+      <hr>
+      <agm-map [latitude]="tlat" [longitude]="tlng" [scrollwheel]="false" [zoom]="16"
+      [mapDraggable]="false" [streetViewControl]="false" [zoomControl]="false"
+      style="width: 100%; height: 300px">
+        <agm-marker [latitude]="tlat" [longitude]="tlng"></agm-marker>
+      </agm-map>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<!-- modal  -->
+<div class="container">
+  <button (click)="ngxSmartModalService.getModal('myModal').open() && editTruck(f)">Open myModal</button>
+
+  <ngx-smart-modal #myModal [identifier]="'myModal'">
+    <h2>트럭정보수정</h2>
+    <div class="">
+      <form class="form-horizontal" name="f" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div class="form-group">
+    			<label for="tname" class="control-label col-xs-2">이름</label>
+    			<div class="col-xs-10">
+    				<input type="text" class="form-control" [(ngModel)]="tname" name="tname"  value="{{tname}}" placeholder="tname" required>
+    			</div>
+    		</div>
+        <div class="form-group">
+          <label for="tcomment" class="control-label col-xs-2">한마디</label>
+          <div class="col-xs-10">
+            <input type="text" class="form-control" [(ngModel)]="tcomment" id="tcomment" name="tcomment" value="{{tcomment}}" placeholder="tcomment" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="topen" class="control-label col-xs-2">오픈시간</label>
+          <div class="col-xs-10">
+            <input type="text" class="form-control" [(ngModel)]="topen" id="topen" name="topen"  value="{{topen}}" placeholder="topen" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tclose" class="control-label col-xs-2">종료시간</label>
+          <div class="col-xs-10">
+            <input type="text" class="form-control" [(ngModel)]="tclose" id="tclose" name="tclose" value="{{tclose}}" placeholder="tclose" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="address">위치</label>
+          <div class="col-xs-10">
+            <input type="text" class="form-control" [(ngModel)]="tlat" value="{{tlat}}" name="tlat" placeholder="tlat" required>
+            <input type="text" class="form-control" [(ngModel)]="tlng" value="{{tlng}}" name="tlng" placeholder="tlng" required>
+            <button type="button" class="btn btn-primary" (click)="setCurrentPosition()" name="button">위치 등록</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="timage" class="control-label col-xs-2">사진</label>
+          <div class="col-xs-10">
+            <input type="file" class="form-control" (change)="selectFile($event)" id="timage" name="timage" placeholder="timage" required>
+            <img src="{{url}}" alt="" width="120px" height="120px">
+            <img *ngIf="!url" src="http://localhost:8080/image/{{timage}}" alt="" width="120px" height="120px">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-offset-2 col-xs-10">
+            <a (click)="myModal.close() ; clean()" (onClose)="'hi'" class="btn btn-primary">수정취소</a>
+              <button type="submit" (click)="myModal.close()"  class="btn btn-primary">수정완료</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
 </div>

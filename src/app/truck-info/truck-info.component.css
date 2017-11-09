@@ -1,0 +1,13 @@
+.tab-pane{
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+
+.tab-pane.active{
+  height: auto;
+  overflow: visible;
+}
+.rating {
+  justify-content: flex-start; 
+}

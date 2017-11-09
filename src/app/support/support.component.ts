@@ -12,7 +12,10 @@ export class SupportComponent implements OnInit {
 
   supports: object[] = [];
 
-  constructor(private supportService: SupportService,  private router:Router) { }
+  rating = 0;
+
+  constructor(private supportService: SupportService, private router: Router) {
+  }
 
   ngOnInit() {
     this.supportService.getList().subscribe(res => {

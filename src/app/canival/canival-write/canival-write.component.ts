@@ -40,16 +40,15 @@ export class CanivalWriteComponent implements OnInit {
     }
     else {
       f.value.cImage = this.selectedFiles.item(0);
-      this.canivalService.postCanival(
+      this.canivalService.postAddCanival(
         f.value.cTitle,
         f.value.cContent,
         f.value.cSdate,
         f.value.cEdate,
         f.value.cImage,
-      ).subscribe(
-        res => {
-          this.router.navigate(["canival-detail", res.json().cid]);
-        });
+      ).subscribe(res => {
+        this.router.navigate(["canival-detail", res.json().cid]);
+      });
     }
   }
 }

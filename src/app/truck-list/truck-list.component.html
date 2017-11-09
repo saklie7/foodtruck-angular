@@ -17,15 +17,30 @@
           <div class="panel-heading">
             번호 {{t.tid}}
             <div class="pull-right">
-              <button type="button" class="btn btn-xs btn-primary" (click)="getFoodTruck(t.tid)">바로가기</button>
+              <button type="button" class="btn btn-xs btn-default" (click)="getFoodTruck(t.tid)">바로가기</button>
             </div>
           </div>
           <div class="panel-body">
-            <div class="col-sm-2">
-              <img src="http://{{t.timage}}" alt="" width="150px" height="150px">
+            <div class="col-md-2 col-sm-3">
+              <img src="http://localhost:8080/image/{{t.timage}}" alt="" width="150px" height="150px">
             </div>
-            <div class="col-sm-10">
+            <div class="col-md-10 col-sm-9">
               이름: {{t.tname}}<br>
+              <div class="rating label-left">
+                <div class="lavel-value">{{t.tavg}}</div>
+                <div class="star-container">
+                  <star-rating-comp
+                    [starType]="'svg'"
+                    [hoverEnabled]="false"
+                    [size]="'medium'"
+                    [direction]="'ltr'"
+                    [rating]="t.tavg"
+                    [step]="0.1"
+                    [showHalfStars]="true"
+                    [readOnly]="true">
+                </star-rating-comp>
+                </div>
+              </div>
               영업시간: {{t.topen}} ~ {{t.tclose}}<br>
               주소: {{t.taddress}}<br>
               사업자: {{t.tmember}}<br>

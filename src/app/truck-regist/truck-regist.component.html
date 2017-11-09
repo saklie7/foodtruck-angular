@@ -37,6 +37,7 @@
           <label class="control-label col-xs-2" for="picture">사진</label>
           <div class="col-xs-10">
             <input type="file" (change)="selectFile($event)" name="picture" class="form-control" required>
+            <img src="{{url}}" alt="" width="120px" height="120px">
           </div>
       </div>
       <button class="btn btn-primary"  [disabled]="f.invalid">

@@ -14,6 +14,7 @@ import { MenuListComponent } from './menu-list/menu-list.component';
 import { TruckRegistComponent } from './truck-regist/truck-regist.component';
 import { SupportWriteComponent } from './support/support-write/support-write.component';
 import { SupportDetailComponent } from './support/support-detail/support-detail.component';
+import { SupportUpdateComponent } from './support/support-update/support-update.component';
 import { MemberProfileComponent } from './member-profile/member-profile.component';
 import { CanivalDetailComponent } from './canival/canival-detail/canival-detail.component';
 import { CanivalViewComponent } from './canival/canival-view/canival-view.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'support', component: SupportComponent},
   { path: 'support-detail/:sid', component: SupportDetailComponent},
   { path: 'support/write', component: SupportWriteComponent},
+  { path: 'support-update/:sid', component: SupportUpdateComponent},
   { path: 'reviews', component: ReviewsComponent},
   { path: 'menu-list', component: MenuListComponent},
   { path: 'truck-info/:tid', component: TruckInfoComponent},

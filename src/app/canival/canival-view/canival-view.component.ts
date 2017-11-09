@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
-import { Router } from '@angular/router';
-
 import { CanivalService } from '../../_services/canival.service';
-
 import { Canival } from '../../_models/canival.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-canival-view',

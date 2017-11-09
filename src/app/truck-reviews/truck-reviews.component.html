@@ -1,7 +1,7 @@
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     <h3>트럭 {{tid}}번의 리뷰</h3>
-    <!-- 화면에 결과 메세지를 띄우고 싶을 때, 지금은 alert사용 -->
+    화면에 결과 메세지를 띄우고 싶을 때, 지금은 alert사용
     <div *ngIf="message" class="alert alert-info">{{message}}</div>
     <div  class="col-md-12" *ngFor="let r of truckReviews | paginate: {itemsPerPage: 5,
                                                                       currentPage: p}">
@@ -12,7 +12,6 @@
             <img src="http://localhost:8080/image/{{r.rimage}}" alt="x" width="120px" height="120px">
           </div>
           <div class="col-md-10 col-sm-8 col-xs-6">
-            해당트럭: {{r.rtruck}}<br>
             내용: {{r.rcomment}}<br>
             점수: {{r.rscore}}<br>
             작성일: {{r.rdate}}<br>
@@ -22,41 +21,169 @@
       </div>
     </div>
   </div>
-  <div class="" style="">
-    <pagination-controls (pageChange)="p = $event"
-                          directionLinks="true"
-                          autoHide="false"
-                          previousLabel="<<"
-                          nextLabel=">>"
-                          screenReaderPaginationLabel="Pagination"
-                          screenReaderPageLabel="page"
-                          screenReaderCurrentLabel="You're on page">
-    </pagination-controls>
+  <div class="row text-center">
+    <ul class="pagination" style="">
+      <pagination-controls (pageChange)="p = $event"
+                            directionLinks="true"
+                            autoHide="true"
+                            previousLabel=""
+                            nextLabel=""
+                            screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </ul>
   </div>
   <form class="form-horizontal" *ngIf="member" name="form" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
     <div class="form-group">
       <label for="comment" class="control-label col-xs-2">글내용</label>
       <div class="col-xs-10">
-        <input type="text" class="form-control" [(ngModel)]="comment" name="comment" required>
+        <textarea rows="5" class="form-control" [(ngModel)]="comment" name="comment" required></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="score" class="control-label col-xs-2">별점</label>
+      <div class="col-xs-10">
+        <div class="star-rating">
+          <star-rating-comp   [(ngModel)]="score"
+                              [starType]="'svg'"
+                              [hoverEnabled]="true"
+                              [size]="'medium'"
+                              [staticColor]="'ok'"
+                              [direction]="'ltr'"
+                              [rating]="3"
+                              [step]="0.5"
+                              [showHalfStars]="true"
+                              (onClick)="onClick($event)"
+                              (onRatingChange)="onRatingChange($event)"
+                              (onHoverRatingChange)="onHoverRatingChange($event)">
+          </star-rating-comp>
+          <p>onHoverRatingChangeResult: {{onHoverRatingChangeResult | json}}</p>
+          <p>onClickResult: {{onClickResult | json}}</p>
+          <p>onRatingChangeResult: {{onRatingChangeResult | json}}</p>
+        </div>
+        <input type="number" class="form-control" [(ngModel)]="score" name="score" required>
       </div>
     </div>
     <div class="form-group">
       <label class="sr-only" class="control-label col-xs-2" for="image">사진</label>
       <div class="col-xs-10">
         <input type="file" class="form-control" name="image" (change)="selectFile($event)">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="score" class="control-label col-xs-2">별점</label>
-      <div class="col-xs-10">
-        <input type="number" class="form-control" [(ngModel)]="score" name="score" required>
+        <img src="{{url}}" alt="" width="120px" height="120px">
       </div>
     </div>
     <div class="form-group">
       <div class="col-xs-offset-2 col-xs-10">
-        <!-- <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div> -->
         <button type="submit" class="btn btn-primary"  [disabled]="f.invalid">Add</button>
       </div>
     </div>
   </form>
 </div>
+<hr>
+<div class="container">
+  <hr>
+  <div class="star-rating">
+    <star-rating-comp   [starType]="'svg'"
+                        [hoverEnabled]="true"
+                        [size]="'medium'"
+                        [staticColor]="'ok'"
+                        [direction]="'ltr'"
+                        [rating]="3"
+                        [step]="0.5"
+                        [showHalfStars]="true"
+                        (onClick)="onClick($event)"
+                        (onRatingChange)="onRatingChange($event)"
+                        (onHoverRatingChange)="onHoverRatingChange($event)">
+    </star-rating-comp>
+    <p>onHoverRatingChangeResult: {{onHoverRatingChangeResult | json}}</p>
+    <p>onClickResult: {{onClickResult | json}}</p>
+    <p>onRatingChangeResult: {{onRatingChangeResult | json}}</p>
+  </div>
+</div>
+<hr> -->
+
+<div class="container">
+  <div class="row">
+    <h3>트럭 {{tid}}번의 리뷰</h3>
+    <div *ngIf="message" class="alert alert-info">{{message}}</div>
+    <div  class="col-md-12" *ngFor="let r of truckReviews | paginate: {itemsPerPage: 5,
+                                                                      currentPage: p}">
+      <div class="panel panel-default">
+        <div class="panel-heading" >리뷰 번호: {{r.rid}}</div>
+        <div class="panel-body" >
+          <div class="col-md-2 col-sm-3" *ngIf="r.rimage">
+            <img src="http://localhost:8080/image/{{r.rimage}}" alt="x" width="120px" height="120px">
+          </div>
+          <div class="col-md-10 col-sm-9">
+            작성자: {{r.rmember}} <span style="color: gray; font-size: 0.7em"> | {{r.rdate}}</span> <br>
+            <div class="rating">
+              <div class="star-container">
+                <star-rating-comp
+                  [starType]="'svg'"
+                  [hoverEnabled]="false"
+                  [staticColor]="'ok'"
+                  [size]="'medium'"
+                  [direction]="'ltr'"
+                  [rating]="r.rscore"
+                  [showHalfStars]="true"
+                  [readOnly]="true">
+              </star-rating-comp>
+              </div>
+            </div>
+            내용: {{r.rcomment}}<br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center">
+    <ul class="pagination" style="">
+      <pagination-controls (pageChange)="p = $event"
+                            directionLinks="true"
+                            autoHide="true"
+                            previousLabel=""
+                            nextLabel=""
+                            screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </ul>
+  </div>
+  <form class="form-horizontal" *ngIf="member" name="form" [formGroup]="f" (ngSubmit)="onSubmit(f.value)"  novalidate>
+    <div class="form-group">
+      <label for="comment" class="control-label col-xs-2">글내용</label>
+      <div class="col-xs-10">
+        <textarea rows="5" class="form-control" formControlName="comment" name="comment" required></textarea>
+      </div>
+      <div class="alert" *ngIf="!f.controls['comment'].valid && f.controls['comment'].touched">must write</div>
+    </div>
+    <div class="form-group">
+      <label for="score" class="control-label col-xs-2">별점</label>
+      <div class="col-xs-10">
+        <div class="star-rating">
+          <star-rating-comp   formControlName="score"
+                              [starType]="'svg'"
+                              [hoverEnabled]="true"
+                              [size]="'medium'"
+                              [staticColor]="'ok'"
+                              [rating]="3"
+                              [showHalfStars]="true">
+          </star-rating-comp>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="sr-only" class="control-label col-xs-2" for="image">사진</label>
+      <div class="col-xs-10">
+        <input type="file" class="form-control" name="image" (change)="selectFile($event)">
+        <img src="{{url}}" alt="" width="120px" height="120px">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-offset-2 col-xs-10">
+        <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Add</button>
+      </div>
+    </div>
+  </form>
+</div>
+<hr>

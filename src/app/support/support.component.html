@@ -1,32 +1,65 @@
 <div class="container">
-  <h2>문의하기</h2>
-  <table class="table table-condensed table-hover table-striped">
+  <h2>고객센터</h2>
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">No</th>
-        <th class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Title</th>
-        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Writer</th>
-        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Date</th>
+        <th class="col-xs-2 col-sm-1 col-md-1 col-lg-1">글번호</th>
+        <th class="col-xs-5 col-sm-6 col-md-6 col-lg-6">제목</th>
+        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">작성자</th>
+        <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">작성일</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let s of supports; let i = index">
+      <tr *ngFor="let s of supports | paginate: {itemsPerPage: 15,
+                                                currentPage: p}">
         <td>{{s.sid}}</td>
-        <!-- <td><a (click)="getSupport(s.sid)">{{s.stitle}}</a></td> -->
         <td><a [routerLink]="['/support-detail', s.sid]">{{s.stitle}}</a></td>
         <td>{{s.smember}}</td>
         <td>{{s.sdate}}</td>
       </tr>
     </tbody>
   </table>
-  <div class="row">
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-      <ul class="pagination">
-      </ul>
-    </div>
-    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-      <span class="pull-right"> <a routerLink="write" class="btn btn-primary">작성하기</a>
-				</span>
-    </div>
+  <div class="">
+    <a class="btn btn-default pull-right" routerLink="write">글쓰기</a>
   </div>
+  <div class="row text-center">
+    <ul class="pagination" style="">
+      <pagination-controls (pageChange)="p = $event"
+                            directionLinks="true"
+                            autoHide="true"
+                            previousLabel=""
+                            nextLabel=""
+                            screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </ul>
+  </div>
+</div>
+<div class="container">
+  <!-- <star-rating-comp
+    [id]="starRatingConfig.id"
+    [rating]="starRatingConfig.rating"
+    [step]="starRatingConfig.step"
+    [showHalfStars]="starRatingConfig.showHalfStars"
+    [numOfStars]="starRatingConfig.numOfStars"
+    [size]="starRatingConfig.size"
+    [space]="starRatingConfig.space"
+    [staticColor]="starRatingConfig.staticColor"
+    [disabled]="starRatingConfig.disabled"
+    [hoverEnabled]="starRatingConfig.hoverEnabled"
+    [starType]="starRatingConfig.starType"
+    [labelText]="starRatingConfig.labelText"
+    [labelPosition]="starRatingConfig.labelPosition"
+
+    [speed]="starRatingConfig.speed"
+    [direction]="starRatingConfig.direction"
+    [readOnly]="starRatingConfig.readOnly"
+    [getColor]="starRatingConfig.getColor"
+    [getHalfStarVisible]="starRatingConfig.getHalfStarVisible"
+    (onHoverRatingChange)="starRatingConfig.onHoverRatingChange($event)"
+    (onClick)="starRatingConfig.onClick($event)"
+    (onRatingChange)="starRatingConfig.onRatingChange($event)">
+</star-rating-comp> -->
+<hr>
 </div>

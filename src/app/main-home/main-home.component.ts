@@ -7,8 +7,11 @@ import { RouterLink } from '@angular/router'
   styleUrls: ['./main-home.component.css']
 })
 export class MainHomeComponent implements OnInit {
+  session: string;
 
-  constructor() { }
+  constructor() {
+    this.session = sessionStorage.getItem('member');
+  }
 
   ngOnInit() {
   }

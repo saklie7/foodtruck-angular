@@ -20,21 +20,20 @@ export class TruckService {
 
 
   getObservable(): Observable<any> {
-    console.log('getObservable() working');
+    // console.log('getObservable() working');
     return this.subject.asObservable();
   }
 
   // truckRegist(name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File) {
-  truckRegist(name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File, email:string) {
+  truckRegist(name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File, email: string) {
     const url = `${this.truckUrl}/post`;
     let formdata: FormData = new FormData();
     let address: string;
     // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
 
-    this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng+"&key=AIzaSyAmd6XJpMMk5qA869GC9XXrNmo8Fb1cRYg")
-    .subscribe(response=>
-      {
+    this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyAmd6XJpMMk5qA869GC9XXrNmo8Fb1cRYg")
+      .subscribe(response => {
         // console.log(response.json());
         console.log(response.json().results[0].formatted_address);
         address = response.json().results[0].formatted_address;
@@ -56,15 +55,109 @@ export class TruckService {
         console.log(formdata.get('email'));
 
 
-        return this.http.post(url, formdata).subscribe(()=>{
-          this.subject.next({check:'true'})}
+        return this.http.post(url, formdata).subscribe(() => {
+          this.subject.next({ check: 'true' })
+        }
         );
       })
   }
 
+  //truck update - image도 변경할 때
+  // updateTruck(name:string, open:string, close:string, comment:string, image:File, id:string) {
+  //   const url = `${this.truckUrl}/update/${id}`;
+  //   let formdata: FormData = new FormData();
+  //
+  //   formdata.append('name', name);
+  //   formdata.append('open', open);
+  //   formdata.append('close', close);
+  //   formdata.append('comment', comment);
+  //   formdata.append('image', image);
+  //
+  //   return this.http.post(url, formdata).subscribe(()=>{
+  //     console.log('updatetruck')
+  //     this.subject.next({check:'true'})}
+  //   );
+  // }
+  //
   truckgetAll(): Observable<any> {
     const url = `${this.truckUrl}`;
     return this.http.get(url)
+  }
+
+  truckRegist2(tid: string, name: string, open: string, close: string, lat: string, lng: string, comment: string, file: string, email: string) {
+    const url = `${this.truckUrl}/post2`;
+    let formdata: FormData = new FormData();
+    let address: string;
+    // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
+
+    this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyAmd6XJpMMk5qA869GC9XXrNmo8Fb1cRYg")
+      .subscribe(response => {
+        // console.log(response.json());
+        console.log(response.json().results[0].formatted_address);
+        address = response.json().results[0].formatted_address;
+
+        console.log(address);
+
+        formdata.append('tid', tid);
+        formdata.append('name', name);
+        formdata.append('open', open);
+        formdata.append('close', close);
+        formdata.append('lat', lat);
+        formdata.append('lng', lng);
+        formdata.append('comment', comment);
+        formdata.append('file', file);
+        formdata.append('address', address);
+        formdata.append('email', email);
+
+        console.log(formdata.get('address'));
+        console.log(formdata.get('file'));
+        console.log(formdata.get('email'));
+
+
+        return this.http.post(url, formdata).subscribe(() => {
+          this.subject.next({ check: 'true' })
+        }
+        );
+      })
+  }
+
+  truckRegist3(tid: string, name: string, open: string, close: string, lat: string, lng: string, comment: string, file: File, email: string) {
+    const url = `${this.truckUrl}/post3`;
+    let formdata: FormData = new FormData();
+    let address: string;
+    // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
+
+    this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=AIzaSyAmd6XJpMMk5qA869GC9XXrNmo8Fb1cRYg")
+      .subscribe(response => {
+        // console.log(response.json());
+        console.log(response.json().results[0].formatted_address);
+        address = response.json().results[0].formatted_address;
+
+        console.log(address);
+
+        formdata.append('tid', tid);
+        formdata.append('name', name);
+        formdata.append('open', open);
+        formdata.append('close', close);
+        formdata.append('lat', lat);
+        formdata.append('lng', lng);
+        formdata.append('comment', comment);
+        formdata.append('file', file);
+        formdata.append('address', address);
+        formdata.append('email', email);
+
+        console.log(formdata.get('address'));
+        console.log(formdata.get('file'));
+        console.log(formdata.get('email'));
+
+
+        return this.http.post(url, formdata).subscribe(() => {
+          this.subject.next({ check: 'true' })
+        }
+        );
+      })
   }
 
   keyFind(key: string): Observable<any> {
@@ -74,13 +167,19 @@ export class TruckService {
     return this.http.get(url);
   }
 
-  getTruckInfo(tid: string):Observable<any> {
+  getTruckInfo(tid: string): Observable<any> {
     const url = `${this.truckUrl}/${tid}`;
     return this.http.get(url)
-    .map(this.extractDataForObject)
-    ._catch(this.handleError);
+      .map(this.extractDataForObject)
+      ._catch(this.handleError);
   }
 
+  getTruckById(tid: string) {
+    let url = `${this.truckUrl}/${tid}`;
+    // console.log(this.http2.get(url));
+    console.log(url);
+    return this.http.get(url);
+  }
 
   private extractDataForObject(res: Response) {
     let json = res.text();

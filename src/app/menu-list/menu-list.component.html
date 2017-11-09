@@ -6,10 +6,10 @@
       <div class="panel panel-default">
         <div class="panel-heading" >음식 번호: {{f.fid}}</div>
         <div class="panel-body" >
-          <div class="col-sm-5" >
-            <img src="http://{{f.fimage}}" alt="img X" width="120px" height="120px">
+          <div class="col-sm-5 " >
+            <img src="http://localhost:8080/image/{{f.fimage}}" alt="img X" width="120px" height="120px">
           </div>
-          <div class="col-sm-7">
+          <div class="col-sm-7 ">
             <strong>{{f.fname}}</strong> <br>
             {{f.fprice}} 원<br>
             <div class="description" style="font-size:0.8em">
@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="" *ngIf="check()">
-    <form class="form-horizontal" name="form" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
+    <form class="form-horizontal" name="form" (ngSubmit)="onSubmit(f);" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="name" class="control-label col-xs-2">이름</label>
         <div class="col-xs-10">
@@ -50,13 +50,14 @@
       <div class="form-group">
         <label class="sr-only" class="control-label col-xs-2" for="image">사진</label>
         <div class="col-xs-10">
-          <input type="file" class="form-control" name="image" (change)="selectFile($event)">
+          <input #myfile type="file" class="form-control" name="image" (change)="selectFile($event)">
+          <img *ngIf="preview" src="{{url}}" alt="" width="120px" height="120px">
         </div>
       </div>
       <div class="form-group">
         <div class="col-xs-offset-2 col-xs-10">
           <!-- <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div> -->
-          <button type="submit" class="btn btn-primary">Add</button>
+          <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Add</button>
         </div>
       </div>
     </form>

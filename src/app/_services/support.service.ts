@@ -36,7 +36,7 @@ export class SupportService {
     let support = { 'sid': sid, 'stitle': stitle, 'scontent': scontent };
     console.log(url);
     this.http.post(url, JSON.stringify(support), options)
-      .subscribe(res => this.subject.next({ result: 'ok' }));
+      .subscribe(res => this.subject.next({ result2: 'ok' }));
   }
 
   getList() {

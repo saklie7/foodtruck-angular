@@ -58,7 +58,7 @@ export class ReviewService {
   }
 
 
-  addReview2(comment:string, score:string, email:string, truck:string): Observable<string> {
+  addReview2(comment:string, score:string, email:string, truck:string) {
     var url = `${this.reviewUrl}/post2`;
     // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
@@ -75,14 +75,14 @@ export class ReviewService {
     console.log('reivew 4='+formdata.get('email'));
     console.log('reivew 5='+formdata.get('truck'));
 
-    return this.http.post(url, formdata)
+    return this.http.post(url, formdata).subscribe(res => this.subject.next({ result: 'ok' }));
       // .map(this.extractDataForObject)
-      .map(res => {
-        let json = res.text();
-        console.log('json='+json)
-        return json || {};
-      })
-      ._catch(this.handleError);
+      // .map(res => {
+      //   let json = res.text();
+      //   console.log('json='+json)
+      //   return json || {};
+      // })
+      // ._catch(this.handleError);
   }
 
   removeReview(review:Review): Observable<string> {

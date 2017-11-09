@@ -1,27 +1,28 @@
 <div class="container">
+  <h2>문의하기</h2>
 	<form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)">
 		<div class="form-group">
-			<label for="title" class="control-label col-xs-2">Title</label>
+			<label for="title" class="control-label col-xs-2">제목</label>
 			<div class="col-xs-10">
 				<input type="text" class="form-control" [(ngModel)]="title" name="title" placeholder="Title" required>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="writer" class="control-label col-xs-2">Writer</label>
+			<label for="writer" class="control-label col-xs-2">작성자</label>
 			<div class="col-xs-10">
 				<input type="text" class="form-control" name="writer" value="{{member.memail}}" required readonly>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="content" class="control-label col-xs-2">Content</label>
+			<label for="content" class="control-label col-xs-2">내용</label>
 			<div class="col-xs-10">
 				<textarea rows="20" class="form-control" [(ngModel)]="content" name="content" placeholder="Content" required></textarea>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-xs-offset-2 col-xs-10">
-				<a [routerLink]="['/support']" class="btn btn-primary">List</a>
-        <button type="submit" class="btn btn-primary" name="button">Save</button>
+				<a [routerLink]="['/support']" class="btn btn-primary">목록</a>
+        <button type="submit" class="btn btn-primary" name="button">작성완료</button>
 			</div>
 		</div>
 	</form>

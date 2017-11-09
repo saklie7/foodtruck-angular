@@ -1,0 +1,8 @@
+.star-rating-comp {
+  font-size:1.2rem;
+  line-height: 1.2rem;
+  /*display: inline-block;*/
+}
+.rating {
+  justify-content: flex-start;
+}

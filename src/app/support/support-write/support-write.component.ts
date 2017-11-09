@@ -14,6 +14,7 @@ export class SupportWriteComponent implements OnInit {
   session: string;
   member:Member;
   email: string;
+  sid:string;
 
 
   constructor(

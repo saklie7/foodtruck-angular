@@ -1,19 +1,50 @@
-<div class="bs-example container">
+<div class="container">
   <div class="row">
     <h3>{{member.mnickname}} 님의 리뷰</h3>
     <!-- 화면에 결과 메세지를 띄우고 싶을 때, 지금은 alert사용 -->
     <!-- <div *ngIf="message" class="alert alert-info">{{message}}</div> -->
-    <div  class="col-md-4" *ngFor="let r of myReviews">
+    <div  class="col-md-4" *ngFor="let r of myReviews  | paginate: {itemsPerPage: 5,
+                                                                    currentPage: p}">
       <div class="panel panel-default">
         <div class="panel-heading" >리뷰 번호: {{r.rid}}</div>
         <div class="panel-body" >
-          해당트럭: {{r.rtruck}}<br>
-          사진: {{r.rimage}}<br>
-          내용: {{r.rcomment}}<br>
-          점수: {{r.rscore}}<br>
-          작성일: {{r.rdate}}<br>
+          <div class="col-md-2 col-sm-3" *ngIf="r.rimage">
+            <img src="http://localhost:8080/image/{{r.rimage}}" alt="x" width="120px" height="120px">
+          </div>
+          <div class="col-md-10 col-sm-9">
+            해당트럭: {{r.rtruck}} <span style="color: gray; font-size: 0.7em"> | 작성일: {{r.rdate}}</span><br>
+            <div class="rating">
+              <div class="star-container">
+                <star-rating-comp
+                  [starType]="'svg'"
+                  [hoverEnabled]="false"
+                  [staticColor]="'ok'"
+                  [size]="'medium'"
+                  [direction]="'ltr'"
+                  [rating]="r.rscore"
+                  [showHalfStars]="true"
+                  [readOnly]="true">
+              </star-rating-comp>
+              </div>
+            </div>
+            내용: {{r.rcomment}}<br>
+
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="row text-center">
+    <ul class="pagination" style="">
+      <pagination-controls (pageChange)="p = $event"
+                            directionLinks="true"
+                            autoHide="true"
+                            previousLabel=""
+                            nextLabel=""
+                            screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </ul>
   </div>
 </div>

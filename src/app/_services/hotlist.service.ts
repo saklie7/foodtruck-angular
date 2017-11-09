@@ -21,13 +21,9 @@ export class HotlistService {
 
   constructor(private http: Http) {
     this.session = sessionStorage.getItem('member');
-    // if(this.session !== null){
-    //   this.member = JSON.parse(this.session);
-    // }
-    console.log('review service # constructor # session =' + this.session);
   }
 
-  getObservable(): Observable<HotlistDetail> {
+  getObservable(): Observable<any> {
     return this.subject.asObservable();
   }
 
@@ -42,17 +38,45 @@ export class HotlistService {
       ._catch(this.handleError);
   }
 
-  addHotlist(member: string, truck: string): Observable<Hotlist> {
-    var url = this.hotlistUrl;
+
+  checkFavo(tId:string){
+    console.log(tId);
+    var id = JSON.parse(sessionStorage.getItem('member')).memail;
+    console.log("id = " + id);
+    const url = `${this.hotlistUrl}/check/${id}/${tId}`;
+    console.log(url)
+    return this.http.get(url).subscribe(
+      res=>{
+        if(res.json().htruck == tId){
+          this.subject.next({check:false});
+        }
+      }
+    );
+  }
+
+  addHotlist(truck: string) {
+    console.log(truck);
+    console.log(JSON.parse(sessionStorage.getItem('member')).memail);
+
+    var url = `${this.hotlistUrl}/post`;
     let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let hotlist = { "hId": null, "hMember": member, "hTruck": truck };
-    console.log(' add holist info = ' + JSON.stringify(hotlist));
+    let hotlist = {"hMember": JSON.parse(sessionStorage.getItem('member')).memail, "hTruck": truck };
 
-    return this.http.post(url, JSON.stringify(hotlist), options)
-      .map(this.extractDataForObject)
-      ._catch(this.handleError);
+    return this.http.post(url, JSON.stringify(hotlist), options);
   }
+
+  // addHotlist(member: string, truck: string): Observable<Hotlist> {
+  //   var url = this.hotlistUrl;
+  //   let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+  //   let options = new RequestOptions({ headers: headers });
+  //   let hotlist = { "hId": null, "hMember": member, "hTruck": truck };
+  //   console.log(' add holist info = ' + JSON.stringify(hotlist));
+  //
+  //   return this.http.post(url, JSON.stringify(hotlist), options)
+  //     .map(this.extractDataForObject)
+  //     ._catch(this.handleError);
+  // }
 
 //되는 remove
   removeHotlist(hotlistdetail: HotlistDetail): Observable<string> {

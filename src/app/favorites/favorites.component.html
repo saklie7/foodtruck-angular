@@ -14,20 +14,38 @@
     </div>
   </form> -->
 
-
-
   <div class="row">
     <h3>{{member.mnickname}} 님의 즐겨찾기</h3>
     <div *ngIf="message" class="alert alert-info">{{message}}</div>
-    <div  class="col-md-4" *ngFor="let h of hotlistDetail">
+    <div  class="col-md-6" *ngFor="let h of hotlistDetail  | paginate: {itemsPerPage: 5,
+                                                                        currentPage: p}">
       <div class="panel panel-default">
         <div class="panel-heading" >즐겨찾기 번호: {{h.hid}}</div>
         <div class="panel-body" >
-          트럭아이디: {{h.tid}}<br>
-          가게이름 : {{h.tname}} <br>
-          평점 : {{h.tavg}}점<br>
-          판매음식 : {{h.tfood}} <br>
-          위도와 경도 : {{h.tlat}} :: {{h.tlng}}<br>
+          <div class="col-sm-3">
+            <img src="http://localhost:8080/image/{{h.timage}}" alt="image X" width="100px" height="100px">
+          </div>
+          <div class="col-sm-9">
+            가게이름 : {{h.tname}} <br>
+            <div class="rating label-left">
+              <div class="lavel-value">{{h.tavg}}</div>
+              <div class="star-container">
+                <star-rating-comp
+                  [starType]="'svg'"
+                  [hoverEnabled]="false"
+                  [size]="'medium'"
+                  [direction]="'ltr'"
+                  [rating]="h.tavg"
+                  [step]="0.1"
+                  [showHalfStars]="true"
+                  [readOnly]="true">
+              </star-rating-comp>
+              </div>
+            </div>
+            주인장 한마디: {{h.tcomment}}<br>
+            영업시간: {{h.topen}} ~ {{h.tclose}}<br>
+            주소 : {{h.taddress}}<br>
+          </div>
         </div>
         <div class="panel-footer clearfix">
           <div class="pull-right">
@@ -38,5 +56,18 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row text-center">
+    <ul class="pagination" style="">
+      <pagination-controls (pageChange)="p = $event"
+                            directionLinks="true"
+                            autoHide="true"
+                            previousLabel=""
+                            nextLabel=""
+                            screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+      </pagination-controls>
+    </ul>
   </div>
 </div>

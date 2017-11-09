@@ -39,6 +39,19 @@ export class MemberService {
       .catch(this.handleError);
   }
 
+  modifyMember(member:Member): Observable<Member> {
+    let url = `${this.memberUrl}/update/${member.memail}`;
+    console.log("rrrr = "+url);
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    // let member = { "mEmail": email, "mPassword": password, "mNickname": nickname };
+    console.log('member = ' + JSON.stringify(member));
+
+    return this.http.post(url, JSON.stringify(member), options)
+      .map(this.extractDataForObject)
+      .catch(this.handleError);
+  }
+
   private extractDataForObject(res: Response) {
     let json = res.text();
     console.log(json);

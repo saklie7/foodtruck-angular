@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgModule } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
 import { CanivalService } from '../../_services/canival.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-canival-detail',
@@ -15,16 +14,22 @@ export class CanivalDetailComponent implements OnInit {
 
   // 상세보기에 필요한 모든 속성들
   cId: String;
+
   cTitle: string;
   cSdate: string;
   cEdate: string;
   cContent: string;
   cViewcount: number;
   cImage: string;
+  cMember: string;
+
+  click: boolean = false;
+  selectedFiles: FileList;
 
   constructor(
     private canivalService: CanivalService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -43,7 +48,7 @@ export class CanivalDetailComponent implements OnInit {
   getCanivalDetail(cId) {
     this.canivalService.getCanivalDetail(cId).subscribe(res => {
       console.log(res.json())
-      this.cId = res.json().cId;
+      this.cId = res.json().cid;
       this.cTitle = res.json().ctitle;
       this.cSdate = res.json().csdate;
       this.cEdate = res.json().cedate;
@@ -53,16 +58,54 @@ export class CanivalDetailComponent implements OnInit {
     });
   }
 
-  // 다음글 메소드
-  next(f) {
-    var key = parseInt(f) + 1;
-    console.log(key)
+  // 특정 축제 정보 삭제 메소드
+  getDeleteCanival(cId) {
+    this.canivalService.getDeleteCanival(cId).subscribe();
+    this.router.navigate(['/canival-view']);
+  }
+
+  //수정 버튼, 수정 가능 양식으로 변환 해줌.
+  updateButton() {
+    this.click = !this.click;
+  }
+
+  // 특정 축제 정보 수정 메소드
+  postUpdateCanival(f) {
+    if (f.valid) {
+      this.click = !this.click;
+      f.value.cImage = this.selectedFiles.item(0);
+      f.value.cId = this.cId;
+      this.canivalService.postUpdateCanival(
+        f.value.cId,
+        f.value.cTitle,
+        f.value.cContent,
+        f.value.cSdate,
+        f.value.cEdate,
+        f.value.cImage,
+      ).subscribe(res => {
+        console.log("여기여기여기여기")
+        // this.router.navigate(["canival-detail", res.json().cid]);
+        this.getCanivalDetail(this.cId);
+      });
+
+    }
+  }
+
+  // 사진 선택
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  // 이전글 이동 메소드
+  preview(cId) {
+    var key = parseInt(cId) - 1;
     this.getCanivalDetail(key);
   }
 
-  // 이전글 메소드
-  preview(f) {
-    var key = parseInt(f) - 1;
+  // 다음글 이동 메소드
+  next(cId) {
+    var key = parseInt(cId) + 1;
     this.getCanivalDetail(key);
   }
+
 }

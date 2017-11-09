@@ -27,7 +27,22 @@ export class SupportDetailComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-    this.sid = params['sid'];
+      this.sid = params['sid'];
+    });
+
+    this.supportService.getObservable().subscribe(res => {
+      console.log(res.result);
+      if(res.result2 === 'ok') {
+        this.supportService.getDetail(this.sid).subscribe(res=>{
+          console.log(res.json());
+          this.title = res.json().stitle;
+          this.date = res.json().sdate;
+          this.content = res.json().scontent;
+          this.member = res.json().smember;
+        });
+      }
+    });
+
     this.supportService.getDetail(this.sid).subscribe(res=>{
       console.log(res.json());
       this.title = res.json().stitle;
@@ -35,7 +50,7 @@ export class SupportDetailComponent implements OnInit {
       this.content = res.json().scontent;
       this.member = res.json().smember;
     });
-  });
+
   }
 
   //로그인한 사람과 글 작성자가 동일 인물인지 체크
@@ -55,15 +70,15 @@ export class SupportDetailComponent implements OnInit {
   }
 
   //업데이트할 때, 데이터 보냄.
-  submitForm(f) {
-    if(f.valid) {
-      this.click = !this.click;
-      this.updateSupport(f.value.sid, f.value.title, f.value.content);
-    }
-  }
-
-  updateSupport(sid, stitle, scontent) {
-    console.log(sid+","+ stitle +","+  scontent)
-    this.supportService.updateSupport(sid, stitle, scontent);
-  }
+  // submitForm(f) {
+  //   if(f.valid) {
+  //     this.click = !this.click;
+  //     this.updateSupport(f.value.sid, f.value.title, f.value.content);
+  //   }
+  // }
+  //
+  // updateSupport(sid, stitle, scontent) {
+  //   console.log(sid+","+ stitle +","+  scontent)
+  //   this.supportService.updateSupport(sid, stitle, scontent);
+  // }
 }

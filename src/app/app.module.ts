@@ -3,15 +3,28 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { AppRoutingModule } from './app-routing.module';
 
-//review star rating
-import { BarRatingModule } from "ngx-bar-rating";
+
+//rating star : npm install angular-star-rating --save
+import { StarRatingModule } from 'angular-star-rating';
 
 //pagination : npm install ngx-pagination --save
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+//icons :  npm install --save font-awesome angular-font-awesome
+//기본설정 - angular-cli.json파일에 아래의 것을 추가
+ // "styles": [
+//   "styles.css",
+//   "../node_modules/font-awesome/css/font-awesome.css"
+// ],
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
+// modal : npm i ngx-smart-modal --save
+import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 //component
@@ -31,9 +44,11 @@ import { MenuListComponent } from './menu-list/menu-list.component';
 import { TruckRegistComponent } from './truck-regist/truck-regist.component';
 import { SupportDetailComponent } from './support/support-detail/support-detail.component';
 import { SupportWriteComponent } from './support/support-write/support-write.component';
+import { SupportUpdateComponent } from './support/support-update/support-update.component';
 import { CanivalDetailComponent } from './canival/canival-detail/canival-detail.component';
 import { CanivalViewComponent } from './canival/canival-view/canival-view.component';
 import { CanivalWriteComponent } from './canival/canival-write/canival-write.component';
+import { MemberProfileComponent } from './member-profile/member-profile.component';
 
 //service
 import { AuthenticationService } from './_services/authentication.service';
@@ -45,7 +60,6 @@ import { TruckService } from './_services/truck.service';
 import { UploadFileService } from './_services/file-upload.service';
 import { FoodService } from './_services/food.service';
 import { SupportService } from './_services/support.service';
-import { MemberProfileComponent } from './member-profile/member-profile.component';
 import { CanivalService } from './_services/canival.service';
 
 
@@ -68,6 +82,7 @@ import { CanivalService } from './_services/canival.service';
     TruckRegistComponent,
     SupportDetailComponent,
     SupportWriteComponent,
+    SupportUpdateComponent,
     MemberProfileComponent,
     CanivalDetailComponent,
     CanivalViewComponent,
@@ -75,15 +90,20 @@ import { CanivalService } from './_services/canival.service';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
     CommonModule,
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
-    //review star rating
-    BarRatingModule,
+    //rating star
+    StarRatingModule.forRoot(),
     //pagination
     NgxPaginationModule,
+    //icons
+    AngularFontAwesomeModule,
+    //modal
+    NgxSmartModalModule.forRoot(),
+    BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBFQmGdDApLDMW8Fp3F8VtOv9kwAg1xAUU',
       region: "kr",
@@ -101,6 +121,8 @@ import { CanivalService } from './_services/canival.service';
     FoodService,
     SupportService,
     CanivalService,
+    //modal service
+    NgxSmartModalService,
   ],
   bootstrap: [AppComponent]
 })

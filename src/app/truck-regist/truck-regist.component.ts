@@ -21,6 +21,7 @@ export class TruckRegistComponent implements OnInit {
 
   selectedFiles: FileList;
   currentFileUpload: File;
+  url: string;
 
   //1
   session: string;
@@ -35,6 +36,13 @@ export class TruckRegistComponent implements OnInit {
 
   selectFile(event) {
     this.selectedFiles = event.target.files;
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.onload = (event:any) => {
+        this.url = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   onSubmit(f) {

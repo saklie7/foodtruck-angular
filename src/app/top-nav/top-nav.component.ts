@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Member } from '../_models/member.model';
 import { AuthenticationService } from '../_services/authentication.service';
+import { TruckService } from '../_services/truck.service';
 
 @Component({
   selector: 'app-top-nav',
@@ -20,7 +21,7 @@ export class TopNavComponent implements OnInit {
   tid: string;
 
 
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(private authService: AuthenticationService, private router: Router, private truckService: TruckService) {
     this.session = sessionStorage.getItem('member');
     console.log('top#component# constructor session=' + this.session);
     if(this.session !== null) {
@@ -53,10 +54,16 @@ export class TopNavComponent implements OnInit {
         if(message.check === '0') {
           this.check = message.check;
         } else {
+          this.check = '1';
           this.tid =JSON.parse(message.check).tid;
-          console.log(this.tid)
+          console.log(this.tid);
         }
     });
+    // this.truckService.getObservable().subscribe(
+    //   message => {
+    //     console.log(message.check);
+    //   }
+    // );
     this.authService.checkTruck(this.email);
   }
 

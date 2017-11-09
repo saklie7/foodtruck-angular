@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Form } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { MemberService } from '../_services/member.service';
+
 import { Member } from '../_models/member.model';
 
 @Component({
@@ -12,25 +14,31 @@ import { Member } from '../_models/member.model';
 export class MemberProfileComponent implements OnInit {
   private member: Member;
 
+  email:string;
+  password:string;
+  nickname:string;
+
   constructor(
-    private router: Router) { }
+    private memberService:MemberService,
+    private router:Router
+  ) {}
 
   ngOnInit() {
-    if (sessionStorage.getItem('member')) {
+    if(sessionStorage.getItem('member')) {
       this.member = JSON.parse(sessionStorage.getItem('member'));
     }
     console.log(this.member);
   }
 
-  pathToMain() {
-    this.router.navigate(['main-home']);
-  }
-
-  memberModify(f) {
-    if (f.valid) {
-      console.log(f.value.mnickname);
+  onSubmit(f) {
+    if(f.valid) {
+      this.memberService.modifyMember(this.member).subscribe(res => {
+          this.member = res;
+          sessionStorage.setItem('member', JSON.stringify(this.member));
+          console.log(sessionStorage.getItem('member'));
+          this.router.navigateByUrl("main-home");
+      });
     }
   }
-
 
 }
