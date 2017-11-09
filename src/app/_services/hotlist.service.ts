@@ -38,7 +38,6 @@ export class HotlistService {
       ._catch(this.handleError);
   }
 
-
   checkFavo(tId:string){
     console.log(tId);
     var id = JSON.parse(sessionStorage.getItem('member')).memail;
@@ -64,6 +63,35 @@ export class HotlistService {
     let hotlist = {"hMember": JSON.parse(sessionStorage.getItem('member')).memail, "hTruck": truck };
 
     return this.http.post(url, JSON.stringify(hotlist), options);
+  }
+
+  addHotlist2(tid: string) {
+    console.log(tid);
+    console.log(JSON.parse(sessionStorage.getItem('member')).memail);
+
+    var url = `${this.hotlistUrl}/post`;
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let hotlist = {"hMember": JSON.parse(sessionStorage.getItem('member')).memail, "hTruck": tid };
+
+    return this.http.post(url, JSON.stringify(hotlist), options).subscribe(res => this.subject.next({ favo: 'ok' }));
+  }
+
+  //이미 존재하는 즐찾인지 확인
+  checkHotlist(tid:string) {
+    console.log('checkHotlist===='+tid);
+    var id = JSON.parse(sessionStorage.getItem('member')).memail;
+    const url = `${this.hotlistUrl}/check/${id}/${tid}`;
+    console.log('url::::'+url)
+    return this.http.get(url).subscribe(
+      res=>{
+        console.log(res.text())
+        if(res.text() !== null) {
+          console.log('하하하하하하하하하하하하하하')
+          this.subject.next({ favo: 'ok' });
+        }
+      }
+    );
   }
 
   // addHotlist(member: string, truck: string): Observable<Hotlist> {

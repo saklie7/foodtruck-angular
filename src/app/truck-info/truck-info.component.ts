@@ -38,6 +38,7 @@ export class TruckInfoComponent implements OnInit {
   tlng: number;
 
   check: boolean = true;
+  checkHot: boolean = false;
 
   tid: string;
   sub: any;
@@ -100,8 +101,18 @@ export class TruckInfoComponent implements OnInit {
         this.agmMap.triggerResize();
       }
     });
+    //홍 - 즐겨찾기
+    // this.hotlistService.checkFavo(this.tid);
 
-    this.hotlistService.checkFavo(this.tid);
+
+    this.checkHotlist(this.tid);
+    //민-즐겨찾기 추가시, 즐찾버튼삭제
+    this.hotlistService.getObservable().subscribe(result => {
+      console.log(result.favo);
+      if(result.favo === 'ok') {
+        this.checkHot = true;
+      }
+    });
 
     this.hotlistService.getObservable().subscribe(
       message => {
@@ -117,6 +128,7 @@ export class TruckInfoComponent implements OnInit {
         this.getTruckInfo(this.tid);
       }
     });
+
   }
 
   //주인인지 아닌지를 확인
@@ -145,6 +157,7 @@ export class TruckInfoComponent implements OnInit {
     });
   }
 
+  //인홍 favorite추가
   favorite(f) {
     console.log(f);
     this.hotlistService.addHotlist(f).subscribe(
@@ -152,6 +165,16 @@ export class TruckInfoComponent implements OnInit {
     );
   }
 
+  //민 - 즐겨찾기 insert
+  addHotlist(tid: string) {
+    console.log(tid);
+    this.hotlistService.addHotlist2(tid);
+  }
+
+  //민- 회면이 그려질때, 즉시 즐찾현황을 찾음
+  checkHotlist(tid: string) {
+    this.hotlistService.checkHotlist(tid);
+  }
 
   //Modal
   selectedFiles: FileList;
@@ -168,7 +191,7 @@ export class TruckInfoComponent implements OnInit {
     }
   }
 
-  //업데이트할 때, 데이터 보냄.
+  //트럭 정보 업데이트할 때, 데이터 보냄.
   onSubmit(f) {
     console.log(f.value)
     if (this.selectedFiles === undefined) {

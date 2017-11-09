@@ -62,23 +62,6 @@ export class TruckService {
       })
   }
 
-  //truck update - image도 변경할 때
-  // updateTruck(name:string, open:string, close:string, comment:string, image:File, id:string) {
-  //   const url = `${this.truckUrl}/update/${id}`;
-  //   let formdata: FormData = new FormData();
-  //
-  //   formdata.append('name', name);
-  //   formdata.append('open', open);
-  //   formdata.append('close', close);
-  //   formdata.append('comment', comment);
-  //   formdata.append('image', image);
-  //
-  //   return this.http.post(url, formdata).subscribe(()=>{
-  //     console.log('updatetruck')
-  //     this.subject.next({check:'true'})}
-  //   );
-  // }
-  //
   truckgetAll(): Observable<any> {
     const url = `${this.truckUrl}`;
     return this.http.get(url)

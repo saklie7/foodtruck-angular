@@ -4,8 +4,9 @@
     <div  class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">트럭 번호: {{tid}}
-          <div class="pull-right" *ngIf="!check2()>
-            <button type="button" class="btn btn-xs btn-default" *ngIf="check" (click)="favorite(tid)">즐겨찾기 추가</button>
+          <div class="pull-right" *ngIf="!check2()">
+            <!-- <button type="button" class="btn btn-xs btn-default" *ngIf="check" (click)="favorite(tid)">즐겨찾기 추가</button> -->
+            <button type="button" class="btn btn-xs btn-default" *ngIf="!checkHot" (click)="addHotlist(tid)">즐겨찾기 추가</button>
           </div>
         </div>
         <div class="panel-body" >
@@ -70,8 +71,6 @@
 
 <!-- modal  -->
 <div class="container">
-  <button (click)="ngxSmartModalService.getModal('myModal').open() && editTruck(f)">Open myModal</button>
-
   <ngx-smart-modal #myModal [identifier]="'myModal'">
     <h2>트럭정보수정</h2>
     <div class="">
