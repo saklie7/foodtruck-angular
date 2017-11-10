@@ -5,18 +5,19 @@
   <div class="col-md-6 col-md-offset-3">
     <h2>회원가입</h2>
     <form name="form" (ngSubmit)="onSubmit(f)" #f="ngForm" novalidate>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid  }">
         <label for="email">이메일</label>
-        <input type="email" class="form-control" [(ngModel)]="email" id="email" name="email" placeholder="Email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+        <input type="email" class="form-control" [(ngModel)]="email"  name="email" placeholder="Email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
         <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+        <!-- <div *ngIf="f.submitted && !email.valid && errorMessage" class="help-block">Email is required</div> -->
       </div>
-      <div class="form-group">
+      <div class="form-group" >
         <label for="password">비밀번호</label>
-        <input type="text" class="form-control" [(ngModel)]="password" id="password" name="password" placeholder="password" required>
+        <input type="text" class="form-control" [(ngModel)]="password"  name="password" placeholder="password" required>
       </div>
-      <div class="form-group">
+      <div class="form-group" >
         <label for="nickname">닉네임</label>
-        <input type="text" class="form-control" [(ngModel)]="nickname" id="nickname" name="nickname" placeholder="name" required>
+        <input type="text" class="form-control" [(ngModel)]="nickname"  name="nickname" placeholder="name" required>
       </div>
 
       <div class="form-check form-check-inline">

@@ -78,16 +78,15 @@ export class HotlistService {
   }
 
   //이미 존재하는 즐찾인지 확인
-  checkHotlist(tid:string) {
+  checkHotlist(tid:string, email:string) {
     console.log('checkHotlist===='+tid);
-    var id = JSON.parse(sessionStorage.getItem('member')).memail;
-    const url = `${this.hotlistUrl}/check/${id}/${tid}`;
+    const url = `${this.hotlistUrl}/check/${tid}/${email}`;
     console.log('이미 존재하는 즐찾인지 url::::'+url)
     return this.http.get(url).subscribe(
       res=>{
-        console.log(res.text())
+        console.log('res.text() = '+res.text());
         if(res.text()) {
-          console.log('하하하하하하하하하하하하하하')
+          console.log('if(res.text()) = '+res.text());
           this.subject.next({ favo: 'ok' });
         }
       }

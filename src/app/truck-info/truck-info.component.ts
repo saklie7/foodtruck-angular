@@ -38,6 +38,7 @@ export class TruckInfoComponent implements OnInit {
   tlng: number;
 
   check: boolean = true;
+  //////////////////////////////min
   checkHot: boolean = false;
 
   tid: string;
@@ -88,42 +89,43 @@ export class TruckInfoComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.tid = params['tid'];
+      //트럭정보 초기에 불러오기
+      this.getTruckInfo(this.tid);
+      this.agmMap.triggerResize();
     });
 
-    //트럭정보 초기에 불러오기
-    this.getTruckInfo(this.tid);
-    this.agmMap.triggerResize();
 
+    this.checkHotlist(this.tid, this.email);
     this.truckService.getObservable().subscribe(message => {
       console.log(message.check);
       if (message.check === 'true') {
         this.getTruckInfo(this.tid);
         this.agmMap.triggerResize();
+        this.checkHotlist(this.tid, this.email);
       }
     });
     //홍 - 즐겨찾기
     // this.hotlistService.checkFavo(this.tid);
 
 
-    this.checkHotlist(this.tid);
     //민-즐겨찾기 추가시, 즐찾버튼삭제
     this.hotlistService.getObservable().subscribe(result => {
-      console.log(result.favo);
       if(result.favo === 'ok') {
         this.checkHot = true;
-        console.log(this.checkHot)
       }
     });
 
-    this.hotlistService.getObservable().subscribe(
-      message => {
-        console.log('check')
-        if (message.check == false) {
-          this.check = message.check;
-        }
-      }
-    );
+    //홍 - 즐겨찾기
+    // this.hotlistService.getObservable().subscribe(
+    //   message => {
+    //     console.log('check')
+    //     if (message.check == false) {
+    //       this.check = message.check;
+    //     }
+    //   }
+    // );
 
+    //별점을 줬을 때, 트럭평균별점 변경.
     this.reviewService.getObservable().subscribe(message => {
       console.log(message);
       if (message.result == 'ok') {
@@ -131,9 +133,9 @@ export class TruckInfoComponent implements OnInit {
       }
     });
 
-  }
+  } //end ngOnInit()
 
-  //주인인지 아닌지를 확인
+  //주인인지 아닌지를 확인 -> 트럭수정버튼 확인
   check2() {
     if(this.email === this.tmember) {
       return true;
@@ -174,8 +176,8 @@ export class TruckInfoComponent implements OnInit {
   }
 
   //민- 회면이 그려질때, 즉시 즐찾현황을 찾음
-  checkHotlist(tid: string) {
-    this.hotlistService.checkHotlist(tid);
+  checkHotlist(tid: string, email: string) {
+    this.hotlistService.checkHotlist(tid, email);
   }
 
   //Modal

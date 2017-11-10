@@ -26,6 +26,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+//timepicker
 
 //component
 import { AppComponent } from './app.component';

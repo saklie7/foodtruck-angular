@@ -6,7 +6,9 @@
         <div class="panel-heading">트럭 번호: {{tid}}
           <div class="pull-right" *ngIf="!check2()">
             <!-- <button type="button" class="btn btn-xs btn-default" *ngIf="check" (click)="favorite(tid)">즐겨찾기 추가</button> -->
+            <!-- <button type="button" class="btn btn-xs btn-default" *ngIf="!checkHot" (click)="addHotlist(tid)">즐겨찾기 추가</button> -->
             <button type="button" class="btn btn-xs btn-default" *ngIf="!checkHot" (click)="addHotlist(tid)">즐겨찾기 추가</button>
+            <button type="button" class="btn btn-xs btn-default"  *ngIf="checkHot" >즐겨찾기 완료</button>
           </div>
         </div>
         <div class="panel-body" >
@@ -33,6 +35,7 @@
             주인장 한마디: {{tcomment}}<br>
             영업시간: {{topen}} ~ {{tclose}}<br>
             주소: {{taddress}}<br>
+            주인: {{tmember}}<br>
           </div>
         </div>
         <div class="panel-footer clearfix" *ngIf="check2()">
