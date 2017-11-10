@@ -82,11 +82,11 @@ export class HotlistService {
     console.log('checkHotlist===='+tid);
     var id = JSON.parse(sessionStorage.getItem('member')).memail;
     const url = `${this.hotlistUrl}/check/${id}/${tid}`;
-    console.log('url::::'+url)
+    console.log('이미 존재하는 즐찾인지 url::::'+url)
     return this.http.get(url).subscribe(
       res=>{
         console.log(res.text())
-        if(res.text() !== null) {
+        if(res.text()) {
           console.log('하하하하하하하하하하하하하하')
           this.subject.next({ favo: 'ok' });
         }

@@ -111,11 +111,13 @@ export class TruckInfoComponent implements OnInit {
       console.log(result.favo);
       if(result.favo === 'ok') {
         this.checkHot = true;
+        console.log(this.checkHot)
       }
     });
 
     this.hotlistService.getObservable().subscribe(
       message => {
+        console.log('check')
         if (message.check == false) {
           this.check = message.check;
         }
