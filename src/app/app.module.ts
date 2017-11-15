@@ -26,7 +26,10 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//timepicker
+//timepicker: npm install ngx-bootstrap --save
+import { TimepickerModule  } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { PopoverModule } from 'ngx-bootstrap';
 
 //component
 import { AppComponent } from './app.component';
@@ -105,6 +108,10 @@ import { CanivalService } from './_services/canival.service';
     //modal
     NgxSmartModalModule.forRoot(),
     BrowserAnimationsModule,
+    //timepicker
+    TimepickerModule .forRoot(),
+    BsDatepickerModule.forRoot(),
+    PopoverModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBFQmGdDApLDMW8Fp3F8VtOv9kwAg1xAUU',
       region: "kr",

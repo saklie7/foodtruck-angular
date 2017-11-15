@@ -63,7 +63,7 @@ export class TruckInfoComponent implements OnInit {
   relat: number;
   relng: number;
 
-  email: string;
+  email: string=null;
 
   @ViewChild(AgmMap)
   public agmMap: AgmMap;

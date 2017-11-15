@@ -7,8 +7,8 @@
           <div class="pull-right" *ngIf="!check2()">
             <!-- <button type="button" class="btn btn-xs btn-default" *ngIf="check" (click)="favorite(tid)">즐겨찾기 추가</button> -->
             <!-- <button type="button" class="btn btn-xs btn-default" *ngIf="!checkHot" (click)="addHotlist(tid)">즐겨찾기 추가</button> -->
-            <button type="button" class="btn btn-xs btn-default" *ngIf="!checkHot" (click)="addHotlist(tid)">즐겨찾기 추가</button>
-            <button type="button" class="btn btn-xs btn-default"  *ngIf="checkHot" >즐겨찾기 완료</button>
+            <button type="button" class="btn btn-xs btn-default" *ngIf="email && !checkHot" (click)="addHotlist(tid)">즐겨찾기 추가</button>
+            <!-- <button type="button" class="btn btn-xs btn-default"  *ngIf="email && checkHot" >즐겨찾기 완료</button> -->
           </div>
         </div>
         <div class="panel-body" >
@@ -63,7 +63,7 @@
       <p>트럭 위치</p>
       <hr>
       <agm-map [latitude]="tlat" [longitude]="tlng" [scrollwheel]="false" [zoom]="16"
-      [mapDraggable]="false" [streetViewControl]="false" [zoomControl]="false"
+      [mapDraggable]="false" [streetViewControl]="false" [zoomControl]="true"
       style="width: 100%; height: 300px">
         <agm-marker [latitude]="tlat" [longitude]="tlng"></agm-marker>
       </agm-map>

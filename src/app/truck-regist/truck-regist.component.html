@@ -46,6 +46,108 @@
     </form>
   </div>
 </div>
+<ng-template #popTemplate>Here we go: <div [innerHtml]="html"></div></ng-template>
+<button type="button" class="btn btn-success"
+        [popover]="popTemplate" popoverTitle="Dynamic html inside">
+  Show me popover with html
+</button>
+<input type="text" [popover]="popTemplate"name="comment" placeholder="comment" required>
+<!-- <div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div class="form-group">
+        <label class="control-label col-xs-2" for="email">Name</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" [(ngModel)]="name" name="name" placeholder="name" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-xs-2" for="name">open</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" [(ngModel)]="open" name="open" placeholder="open" required>
+          <timepicker
+          [(ngModel)]="opentime"
+          [hourStep]="1"
+          [minuteStep]="10"
+          [showMeridian]="ismeridian"
+          [readonlyInput]="!isEnabled"
+          ></timepicker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-xs-2" for="name">Close</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" [(ngModel)]="close" name="close" placeholder="close" required>
+          <timepicker
+          [(ngModel)]="closetime"
+          [hourStep]="1"
+          [minuteStep]="10"
+          [showMeridian]="ismeridian"
+          [readonlyInput]="!isEnabled"
+          ></timepicker>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-xs-2" for="address">위치</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" [(ngModel)]="lat" value="{{lat}}" name="lat" placeholder="lat" required>
+          <input type="text" class="form-control" [(ngModel)]="lng" value="{{lng}}" name="lng" placeholder="lng" required>
+          <button type="button" class="btn btn-primary" (click)="setCurrentPosition()" name="button">위치 등록</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-xs-2" for="comment">소개글</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" [(ngModel)]="comment" name="comment" placeholder="comment" required>
+        </div>
+      </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="picture">사진</label>
+          <div class="col-xs-10">
+            <input type="file" (change)="selectFile($event)" name="picture" class="form-control" required>
+            <img src="{{url}}" alt="" width="120px" height="120px">
+          </div>
+      </div>
+      <button class="btn btn-primary"  [disabled]="f.invalid">
+        <b class="glyphicon glyphicon-plus"></b>SEND
+      </button>
+    </form>
+  </div>
+</div>
 
+ <hr>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-3 col-md-3 col-sm-5 col-xs-5" style="border:1px solid black">
+      <label class="control-label col-sm-2" for="picture">open</label>
+      <div class="col-sm-10">
+        <input type="text" name="" value="{{opentime}}" class="timepicker">
+        <timepicker
+        [(ngModel)]="opentime"
+        [hourStep]="1"
+        [minuteStep]="10"
+        [showMeridian]="ismeridian"
+        [readonlyInput]="!isEnabled"
+        ></timepicker>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-5  col-xs-5" style="border:1px solid black">
+      <label class="control-label col-sm-2" for="picture">close</label>
+      <div class="col-sm-10">
+        <timepicker
+        [(ngModel)]="closetime"
+        [hourStep]="1"
+        [minuteStep]="10"
+        [showMeridian]="ismeridian"
+        [readonlyInput]="!isEnabled"
+        ></timepicker>
+      </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="border:1px solid black">
+      <button type="button" class="btn btn-info" (click)="isEnabled=!isEnabled">확정</button>
+    </div>
+  </div>
+</div>
+<pre class="alert alert-info">Time is: {{opentime | date: 'hh:mm'}} ~ {{closetime | date: 'hh:mm'}}</pre>
 <hr>
-<hr>
+<hr> -->
